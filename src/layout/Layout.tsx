@@ -14,6 +14,7 @@ export const Layout: React.FC = ({ children }) => {
       </header>
       <main className={classes.content}>
         <h1>Rent bike</h1>
+        {children}
       </main>
       <footer className={classes.bar}>
         <div className={classes.footer}>© 2018</div>
