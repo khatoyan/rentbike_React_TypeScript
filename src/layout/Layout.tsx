@@ -3,6 +3,7 @@ import React from 'react';
 import classes from './Layout.module.css';
 
 import Logo from './icons/logo.png';
+import Copyright from './icons/copyright.svg';
 
 export const Layout: React.FC = ({ children }) => {
   return (
@@ -17,7 +18,9 @@ export const Layout: React.FC = ({ children }) => {
         {children}
       </main>
       <footer className={classes.bar}>
-        <div className={classes.footer}>© 2018</div>
+        <div className={classes.footer}>
+          <Copyright />
+        </div>
       </footer>
     </div>
   );
