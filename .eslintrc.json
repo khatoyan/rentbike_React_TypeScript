@@ -3,8 +3,10 @@
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": "./tsconfig.json",
-    "sourceType": "module"
+    "sourceType": "module",
+    "createDefaultProgram": true
   },
+  "plugins": ["@typescript-eslint"],
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
@@ -17,12 +19,19 @@
   "settings": {
     "react": {
       "version": "detect"
+    },
+    "import/resolver": {
+      "typescript": {}
     }
   },
   "rules": {
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "react/prop-types": "off",
     "react/jsx-boolean-value": "error",
     "react/display-name": "off",
     "no-alert": "error",
-    "no-console": "error"
+    "no-console": "error",
+    "import/no-default-export": "error"
   }
 }
