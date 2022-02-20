@@ -21,6 +21,7 @@
 ## Начало работы ##
 
 - npm i
+- найстройте использование версии typescript рабочей области <https://code.visualstudio.com/docs/typescript/typescript-compiling#_using-the-workspace-version-of-typescript>
 - npm run start
 - открыть в браузере <http://localhost:3000/>
 
