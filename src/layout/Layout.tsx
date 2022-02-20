@@ -13,10 +13,7 @@ export const Layout: React.FC = ({ children }) => {
           <img src={Logo} alt="Rent bike" />
         </div>
       </header>
-      <main className={classes.content}>
-        <h1>Rent bike</h1>
-        {children}
-      </main>
+      <main className={classes.content}>{children}</main>
       <footer className={classes.bar}>
         <div className={classes.footer}>
           <Copyright />
