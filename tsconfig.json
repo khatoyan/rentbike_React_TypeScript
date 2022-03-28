@@ -24,8 +24,7 @@
     "resolveJsonModule": true,
     "jsx": "react",
     "outDir": "dist",
-    "baseUrl": "./",
-    "plugins": [{ "name": "typescript-plugin-css-modules" }]
+    "baseUrl": "./"
   },
   "include": ["src", "types"]
 }
