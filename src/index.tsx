@@ -9,7 +9,7 @@ import './styles/normalize.css';
 import './styles/main.css';
 
 render(
-  <BrowserRouter>
+  <BrowserRouter basename="/">
     <Layout>
       <Router />
     </Layout>
