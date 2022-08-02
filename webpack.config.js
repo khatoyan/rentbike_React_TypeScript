@@ -64,6 +64,7 @@ module.exports = {
       },
       {
         test: /\.(png|jpg|jpeg)$/,
+        dependency: { not: ['url'] },
         use: [
           {
             loader: 'file-loader',
@@ -75,6 +76,7 @@ module.exports = {
       },
       {
         test: /\.svg$/,
+        dependency: { not: ['url'] },
         use: [
           {
             loader: '@svgr/webpack',
@@ -100,5 +102,11 @@ module.exports = {
     host: 'localhost',
     port: 3000,
     compress: true,
+    proxy: {
+      // http-proxy-middleware
+      '/api/': {
+        target: 'http://localhost:3010',
+      },
+    },
   },
 };

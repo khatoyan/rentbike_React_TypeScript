@@ -32,6 +32,7 @@
     "react/display-name": "off",
     "no-alert": "error",
     "no-console": "error",
-    "import/no-default-export": "error"
+    "import/no-default-export": "error",
+    "property-no-vendor-prefix": "off"
   }
 }

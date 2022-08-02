@@ -1,0 +1,11 @@
+.empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - calc(var(--m) * 40));
+}
+
+.message {
+  text-align: center;
+  color: var(--colorTextSecondary);
+}

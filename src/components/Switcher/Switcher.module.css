@@ -1,0 +1,31 @@
+.switches {
+  display: flex;
+  margin: 0 calc(var(--m) * 2) 0 calc(var(--m) * 4);
+}
+
+.switch {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(var(--m) * 4);
+  width: calc(var(--m) * 4);
+  border-radius: calc(var(--m) * 1);
+  cursor: pointer;
+}
+
+input:checked + .switch {
+  background-color: var(--colorBgLight);
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
