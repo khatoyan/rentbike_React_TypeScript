@@ -3,22 +3,33 @@ import Logo from './img/logo.svg';
 import { Button } from '../components/Button/Button';
 
 import styles from './Layout.module.css';
-import { Modal } from '../components/Modal/Modal';
+import {
+  RegistrationFormData,
+  RegistrationModal
+} from '../components/RegistrationModal/RegistrationModal'
+import {LoginFormData, LoginModal} from '../components/LoginModal/LoginModal'
+import {UserContext} from '../context/UserContext'
+import {Dropdown} from '../components/Dropdown'
 
-interface LoginModalProps {
-  onClose: () => void;
-}
+import {PeopleIcon} from '../components/PeopleIcon/PeopleIcon'
+import {useNavigate} from 'react-router-dom'
 
-const LoginModal = ({ onClose }: LoginModalProps) => {
-  return (
-    <Modal title={'test'} onClose={onClose}>
-      Some text
-    </Modal>
-  );
-};
 
 export const Layout: React.FC = ({ children }) => {
   const [displayLogin, setDisplayLogin] = React.useState(false);
+  const [displayRegistration, setDisplayRegistration] = React.useState(false);
+  const userContext = React.useContext(UserContext);
+  const navigate = useNavigate();
+
+  const onRegister = async (data: RegistrationFormData) => {
+    await userContext.onRegister(data.email, data.password);
+    setDisplayRegistration(false);
+  }
+  const onLogin = async (data: LoginFormData) => {
+    await userContext.onLogin(data.email, data.password);
+    setDisplayLogin(false);
+  }
+
   return (
     <div className={styles.app}>
       <div className={styles.header}>
@@ -27,10 +38,25 @@ export const Layout: React.FC = ({ children }) => {
             <Logo />
           </a>
           <div className={styles.headerButtons}>
-            <Button onClick={() => setDisplayLogin(true)}>Войти</Button>
-            <Button use={'light'}>Регистрация</Button>
+            {!userContext.isLogged &&
+              <>
+                <Button onClick={() => setDisplayLogin(true)}>Войти</Button>
+                <Button light onClick={() => setDisplayRegistration(true)}>Регистрация</Button>
+              </>
+            }
+            {userContext.isLogged &&
+              <>
+                <a className={styles.books} href="/books">Мои бронирования</a>
+                <Dropdown.Wrapper title={<span><PeopleIcon />{userContext.login || 'Unknown'}</span>}>
+                  <Dropdown.Item onClick={() => navigate('/settings')}>Настройки</Dropdown.Item>
+                  <hr/>
+                  <Dropdown.Item>Выйти</Dropdown.Item>
+                </Dropdown.Wrapper>
+              </>
+            }
           </div>
-          {displayLogin && <LoginModal onClose={() => setDisplayLogin(false)} />}
+          {displayLogin && <LoginModal onClose={() => setDisplayLogin(false)} onLogin={onLogin} />}
+          {displayRegistration && <RegistrationModal onClose={() => setDisplayRegistration(false)} onRegister={onRegister} />}
         </header>
       </div>
 

@@ -17,8 +17,6 @@ import { api } from '../../api';
 import { IPagination } from '../../types/common/pagination';
 import { Paging } from '../../components/Paging/Paging';
 
-import { Outlet } from 'react-router-dom';
-
 export const Catalog: React.FC = () => {
   const [activePointId, setActivePointId] = React.useState('');
   const [currentPage, setCurrentPage] = React.useState(1);

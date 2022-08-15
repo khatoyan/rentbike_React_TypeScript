@@ -1,0 +1,43 @@
+.settings {
+  --labelWidth: calc(var(--m) * 22);
+  --inputWidth: calc(var(--m) * 55);
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: calc(var(--m) * 3);
+}
+
+.row {
+  display: flex;
+  align-items: baseline;
+  padding: calc(var(--m) * 3) 0;
+}
+
+.content {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  width: calc(var(--labelWidth) + var(--inputWidth));
+}
+
+.editLink {
+  margin: 0 calc(var(--m) * 3);
+  color: var(--colorTextSecondary);
+  cursor: pointer;
+}
+
+.label {
+  width: var(--labelWidth);
+  color: var(--colorTextSecondary);
+}
+
+.formRow {
+  flex-shrink: 0;
+  margin-bottom: calc(var(--m) * 1);
+  width: var(--inputWidth);
+}
+
+.formRow + .formRow {
+  margin-left: var(--labelWidth);
+}

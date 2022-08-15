@@ -1,0 +1,4 @@
+.ico {
+  padding-left: calc(var(--m) * 3.5);
+  background: url('../../img/people.svg') 0 50% no-repeat;
+}

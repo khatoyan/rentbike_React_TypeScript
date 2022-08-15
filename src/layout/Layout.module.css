@@ -54,3 +54,8 @@
 .footerLink {
   color: var(--colorTextSecondary);
 }
+
+.books {
+  color: var(--colorMain);
+  margin-right: calc(var(--m) * 6);
+}

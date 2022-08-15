@@ -8,9 +8,12 @@ interface Props {
   use?: 'default' | 'light' | 'wide' | 'large' | 'combined';
   disabled?: boolean;
   className?: string;
+  light?: boolean;
+  wide?: boolean;
+  large?: boolean;
 }
 
-export const Button: React.FC<Props> = ({ disabled, className, onClick, use, children }: Props) => {
+export const Button: React.FC<Props> = ({ disabled, className, onClick, use, children, light, wide, large }: Props) => {
   const clickHander = () => {
     if (disabled) return;
     onClick();
@@ -19,9 +22,9 @@ export const Button: React.FC<Props> = ({ disabled, className, onClick, use, chi
     <a
       className={cx(className, styles.button, {
         [styles.disabled]: disabled,
-        [styles.light]: use === 'light',
-        [styles.wide]: use === 'wide' || use === 'combined',
-        [styles.large]: use === 'large' || use === 'combined',
+        [styles.light]: light,
+        [styles.wide]: wide,
+        [styles.large]: large,
       })}
       onClick={clickHander}
     >
