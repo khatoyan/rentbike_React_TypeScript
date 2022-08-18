@@ -18,7 +18,7 @@ export const BikePreview: React.FC<Props> = ({ bike }: Props) => {
         <img src={`/api/catalog/bike/${bike._id}/img`} />
       </a>
       <h4>{bike.name}</h4>
-      <p>{bike.price} ₽/час</p>
+      <p>{bike.cost} ₽/час</p>
       {!withoutFooter && (
         <footer className={styles.bikeCardFooter}>
           <Button>Арендовать</Button>

@@ -1,13 +1,10 @@
 import React from 'react';
 import cx from 'classnames';
 import { pluralize } from '@skbkontur/ui-helpers';
-
-import Dots from '../../img/dots.svg';
-import Bars from '../../img/bars.svg';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import styles from './Catalog.module.css';
 import { Tabs } from '../../components/Tabs';
-import { Switcher } from '../../components/Switcher/Switcher';
 
 import { CatalogEmpty } from './CatalogEmpty/CatalogEmpty';
 import { BikePreview } from './BikePreview/BikePreview';
@@ -16,12 +13,20 @@ import { RentPoint } from '../../types/domain/RentPoint';
 import { api } from '../../api';
 import { IPagination } from '../../types/common/pagination';
 import { Paging } from '../../components/Paging/Paging';
+import { getUpdatedQuery, getValueFromQuery } from '../../helpers/getValueFromQuery';
+
+const pageQueryName = 'page';
+const pointIdQueryName = 'pointId';
 
 export const Catalog: React.FC = () => {
-  const [activePointId, setActivePointId] = React.useState('');
-  const [currentPage, setCurrentPage] = React.useState(1);
   const [bikeList, setBikeList] = React.useState<IPagination<Bike>>(null);
   const [points, setPoints] = React.useState<RentPoint[]>([]);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const currentPage = Number(getValueFromQuery(location.search, pageQueryName) || 1);
+  const activePointId = getValueFromQuery(location.search, pointIdQueryName) || '';
+
   React.useEffect(() => {
     (async () => {
       const [a, b] = await Promise.all([api.catalog.getBikes(currentPage, activePointId), api.point.getPoints()]);
@@ -31,9 +36,22 @@ export const Catalog: React.FC = () => {
   }, [currentPage, activePointId]);
 
   const onChangePoint = (pointId: string) => {
-    setActivePointId(pointId);
-    setCurrentPage(1);
+    const query = getUpdatedQuery(location.search, {
+      [pageQueryName]: undefined,
+      [pointIdQueryName]: pointId || undefined,
+    });
+
+    navigate(`${location.pathname}${query}`);
   };
+
+  const onChangePage = (page: number) => {
+    const query = getUpdatedQuery(location.search, {
+      [pageQueryName]: page.toString(),
+    });
+
+    navigate(`${location.pathname}${query}`);
+  };
+
   return (
     <>
       <header className={styles.header}>
@@ -52,10 +70,7 @@ export const Catalog: React.FC = () => {
           <a href="#modal-map" className={cx(styles.link, styles.iconMap)}>
             На карте
           </a>
-          <Switcher.Wrapper>
-            <Switcher.Item id="cat-1" icon={<Dots />} />
-            <Switcher.Item id="cat-2" icon={<Bars />} />
-          </Switcher.Wrapper>
+          &nbsp; &nbsp;
           {bikeList && (
             <span>
               {bikeList.totalItems}&nbsp;
@@ -68,7 +83,7 @@ export const Catalog: React.FC = () => {
         {bikeList && bikeList.itemsInPage.length <= 0 && <CatalogEmpty />}
         {bikeList && bikeList.itemsInPage.map((bike) => <BikePreview key={bike._id} bike={bike} />)}
       </section>
-      {bikeList && <Paging currentPage={currentPage} totalPages={bikeList.pages} onChangePage={setCurrentPage} />}
+      {bikeList && <Paging currentPage={currentPage} totalPages={bikeList.pages} onChangePage={onChangePage} />}
     </>
   );
 };
