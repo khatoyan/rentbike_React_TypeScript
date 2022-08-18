@@ -6,4 +6,9 @@ export class CatalogService {
     const res = await fetch(`/api/catalog/${pointId}?page=${page}`);
     return res.json();
   }
+
+  public async getBike(bikeId: string): Promise<Bike> {
+    const res = await fetch(`/api/catalog/bike/${bikeId}`);
+    return res.json();
+  }
 }

@@ -3,4 +3,5 @@ export interface Bike {
   name: string;
   img: string;
   cost: number;
+  isRented?: boolean;
 }

@@ -16,7 +16,7 @@ interface Props {
 export const Button: React.FC<Props> = ({ disabled, className, onClick, use, children, light, wide, large }: Props) => {
   const clickHander = () => {
     if (disabled) return;
-    onClick();
+    onClick && onClick();
   };
   return (
     <a

@@ -14,11 +14,13 @@ import { api } from '../../api';
 import { IPagination } from '../../types/common/pagination';
 import { Paging } from '../../components/Paging/Paging';
 import { getUpdatedQuery, getValueFromQuery } from '../../helpers/getValueFromQuery';
+import { BikeModal } from './BikeModal/BikeModal';
 
 const pageQueryName = 'page';
 const pointIdQueryName = 'pointId';
 
 export const Catalog: React.FC = () => {
+  const [selectedBike, setSelectedBike] = React.useState<Bike | null>(null);
   const [bikeList, setBikeList] = React.useState<IPagination<Bike>>(null);
   const [points, setPoints] = React.useState<RentPoint[]>([]);
   const location = useLocation();
@@ -52,6 +54,10 @@ export const Catalog: React.FC = () => {
     navigate(`${location.pathname}${query}`);
   };
 
+  const onCloseBikeModal = () => {
+    setSelectedBike(null);
+  };
+
   return (
     <>
       <header className={styles.header}>
@@ -81,9 +87,13 @@ export const Catalog: React.FC = () => {
       </header>
       <section className={'catalog'}>
         {bikeList && bikeList.itemsInPage.length <= 0 && <CatalogEmpty />}
-        {bikeList && bikeList.itemsInPage.map((bike) => <BikePreview key={bike._id} bike={bike} />)}
+        {bikeList &&
+          bikeList.itemsInPage.map((bike) => (
+            <BikePreview key={bike._id} bike={bike} onRentClick={() => setSelectedBike(bike)} />
+          ))}
       </section>
       {bikeList && <Paging currentPage={currentPage} totalPages={bikeList.pages} onChangePage={onChangePage} />}
+      {selectedBike && <BikeModal bike={selectedBike} onClose={onCloseBikeModal} />}
     </>
   );
 };

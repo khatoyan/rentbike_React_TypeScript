@@ -6,11 +6,12 @@ import { Bike } from '../../../types/domain/Bike';
 import styles from './BikePreview.module.css';
 import { Button } from '../../../components/Button/Button';
 
-interface Props {
+interface BikePreviewProps {
   bike: Bike;
+  onRentClick: () => void;
 }
 
-export const BikePreview: React.FC<Props> = ({ bike }: Props) => {
+export const BikePreview: React.FC<BikePreviewProps> = ({ bike, onRentClick }: BikePreviewProps) => {
   const withoutFooter = false;
   return (
     <div className={styles.bikeCard}>
@@ -21,7 +22,7 @@ export const BikePreview: React.FC<Props> = ({ bike }: Props) => {
       <p>{bike.cost} ₽/час</p>
       {!withoutFooter && (
         <footer className={styles.bikeCardFooter}>
-          <Button>Арендовать</Button>
+          <Button onClick={onRentClick}>Арендовать</Button>
         </footer>
       )}
     </div>

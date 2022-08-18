@@ -29,7 +29,6 @@
 .content {
   background-color: #fff;
   padding: calc(var(--m) * 5) calc(var(--m) * 6);
-  width: calc(var(--m) * 57);
   max-height: 100%;
   overflow: auto;
   border-radius: calc(var(--m) * 2);
@@ -41,6 +40,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  column-gap: calc(var(--m) * 2);
   margin-bottom: calc(var(--m) * 5);
 }
 
