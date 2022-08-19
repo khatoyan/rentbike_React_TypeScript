@@ -1,15 +1,20 @@
-import {createContext} from 'react'
+import { createContext } from 'react';
+import { CardRequisites } from 'src/types/domain/User';
 
-interface UserData {
+export interface UserData {
   isLogged: boolean;
-  login: string
-  onRegister: (login: string, password: string) => Promise<void>
-  onLogin: (login: string, password: string) => Promise<void>
+  login: string;
+  cardRequisites: CardRequisites;
+  onRegister: (login: string, password: string) => Promise<void>;
+  onLogin: (login: string, password: string) => Promise<void>;
+  update: () => Promise<void>;
 }
 
 export const UserContext = createContext<UserData>({
   isLogged: false,
   login: null,
   onLogin: () => null,
-  onRegister: () => null
+  onRegister: () => null,
+  cardRequisites: null,
+  update: () => null,
 });

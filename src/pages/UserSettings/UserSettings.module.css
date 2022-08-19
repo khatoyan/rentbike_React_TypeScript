@@ -8,6 +8,10 @@
   margin-top: calc(var(--m) * 3);
 }
 
+.hidden {
+  display: none;
+}
+
 .row {
   display: flex;
   align-items: baseline;

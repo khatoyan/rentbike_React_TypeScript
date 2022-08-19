@@ -28,7 +28,7 @@ export const BikeModal: React.FC<BikeModalProps> = ({ bike, onClose }) => {
 
   const onClickRent = () => {
     api.order.createOrder(bike._id);
-    onClose();
+    setIsRented(true);
   };
 
   return (

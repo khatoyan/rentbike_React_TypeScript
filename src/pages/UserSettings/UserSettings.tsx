@@ -1,21 +1,21 @@
-import React from 'react';
-import {PageHeader} from '../../components/PageHeader/PageHeader'
-import styles from './UserSettings.module.css'
-import {ChangePassword} from './ChangePassword'
-import {Button} from '../../components/Button/Button'
-import {Input} from '../../components/Input/Input'
+import React, { useEffect } from 'react';
+
+import { EmailRow } from './components/EmailRow';
+import { PageHeader } from '../../components/PageHeader/PageHeader';
+import styles from './UserSettings.module.css';
+import { ChangePassword } from './components/ChangePassword';
+import { Button } from '../../components/Button/Button';
+import { Input } from '../../components/Input/Input';
+import { UserContext } from '../../context/UserContext';
 
 export const UserSettings = () => {
+  const currentUser = React.useContext(UserContext);
+
   return (
     <div>
       <PageHeader>Настройки</PageHeader>
       <section className={styles.settings}>
-        <div className={styles.row}>
-          <div className={styles.content}>
-            <label className={styles.label}>Электронная почта</label>
-            ivanov@gmail.com
-          </div>
-        </div>
+        <EmailRow />
         <ChangePassword />
         <div className={styles.row}>
           <div className={styles.content}>
@@ -23,19 +23,23 @@ export const UserSettings = () => {
             •••• •••• •••• 2887
           </div>
           <form className={styles.content}>
-            <label className={styles.label} htmlFor="settings-number">Карта</label>
+            <label className={styles.label} htmlFor="settings-number">
+              Карта
+            </label>
             <div className={styles.formRow}>
-              <Input type="text" placeholder="0000 0000 0000 0000"
-                     value="2887 2887 2887 2887" id="settings-number" />
+              <Input type="text" placeholder="0000 0000 0000 0000" value="2887 2887 2887 2887" id="settings-number" />
             </div>
-            <label className={styles.label} htmlFor="settings-date">Срок</label>
+            <label className={styles.label} htmlFor="settings-date">
+              Срок
+            </label>
             <div className={styles.formRow}>
               <Input type="text" value="" placeholder="ММ/ГГ" id="settings-date" isShort />
             </div>
-            <label className={styles.label} htmlFor="settings-cvv">CVV</label>
+            <label className={styles.label} htmlFor="settings-cvv">
+              CVV
+            </label>
             <div className={styles.formRow}>
-              <Input type="password" placeholder="•••" value="" isShort
-                     id="settings-cvv" />
+              <Input type="password" placeholder="•••" value="" isShort id="settings-cvv" />
             </div>
             <div className={styles.formRow}>
               <Button>Изменить</Button>
@@ -45,5 +49,5 @@ export const UserSettings = () => {
         </div>
       </section>
     </div>
-  )
-}
+  );
+};
