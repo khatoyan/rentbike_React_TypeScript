@@ -5,7 +5,7 @@ import { Button } from '../../../components/Button/Button';
 import { useMode } from '../../../hooks/useMode';
 import { api } from '../../../api';
 
-export const ChangePassword = () => {
+export const PasswordRow = () => {
   const { mode, toggleMode } = useMode('view');
   const [repeatPassword, setRepeatPassword] = React.useState('');
   const [password, setPassword] = React.useState('');

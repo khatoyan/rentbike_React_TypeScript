@@ -3,20 +3,18 @@ import React, { useEffect } from 'react';
 import { EmailRow } from './components/EmailRow';
 import { PageHeader } from '../../components/PageHeader/PageHeader';
 import styles from './UserSettings.module.css';
-import { ChangePassword } from './components/ChangePassword';
+import { PasswordRow } from './components/PasswordRow';
 import { Button } from '../../components/Button/Button';
 import { Input } from '../../components/Input/Input';
 import { UserContext } from '../../context/UserContext';
 
 export const UserSettings = () => {
-  const currentUser = React.useContext(UserContext);
-
   return (
     <div>
       <PageHeader>Настройки</PageHeader>
       <section className={styles.settings}>
         <EmailRow />
-        <ChangePassword />
+        <PasswordRow />
         <div className={styles.row}>
           <div className={styles.content}>
             <label className={styles.label}>Карта</label>
