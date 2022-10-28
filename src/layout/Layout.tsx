@@ -3,32 +3,30 @@ import Logo from './img/logo.svg';
 import { Button } from '../components/Button/Button';
 
 import styles from './Layout.module.css';
-import {
-  RegistrationFormData,
-  RegistrationModal
-} from '../components/RegistrationModal/RegistrationModal'
-import {LoginFormData, LoginModal} from '../components/LoginModal/LoginModal'
-import {UserContext} from '../context/UserContext'
-import {Dropdown} from '../components/Dropdown'
+import { RegistrationFormData, RegistrationModal } from '../components/RegistrationModal/RegistrationModal';
+import { LoginFormData, LoginModal } from '../components/LoginModal/LoginModal';
+import { UserContext } from '../context/UserContext';
+import { Dropdown } from '../components/Dropdown';
 
-import {PeopleIcon} from '../components/PeopleIcon/PeopleIcon'
-import {useNavigate} from 'react-router-dom'
-
+import { PeopleIcon } from '../components/PeopleIcon/PeopleIcon';
+import { useNavigate } from 'react-router-dom';
 
 export const Layout: React.FC = ({ children }) => {
   const [displayLogin, setDisplayLogin] = React.useState(false);
   const [displayRegistration, setDisplayRegistration] = React.useState(false);
+  const [displayCa, setDisplayRegistration] = React.useState(false);
+
   const userContext = React.useContext(UserContext);
   const navigate = useNavigate();
 
   const onRegister = async (data: RegistrationFormData) => {
     await userContext.onRegister(data.email, data.password);
     setDisplayRegistration(false);
-  }
+  };
   const onLogin = async (data: LoginFormData) => {
     await userContext.onLogin(data.email, data.password);
     setDisplayLogin(false);
-  }
+  };
 
   return (
     <div className={styles.app}>
@@ -38,25 +36,39 @@ export const Layout: React.FC = ({ children }) => {
             <Logo />
           </a>
           <div className={styles.headerButtons}>
-            {!userContext.isLogged &&
+            {!userContext.isLogged && (
               <>
                 <Button onClick={() => setDisplayLogin(true)}>Войти</Button>
-                <Button light onClick={() => setDisplayRegistration(true)}>Регистрация</Button>
+                <Button light onClick={() => setDisplayRegistration(true)}>
+                  Регистрация
+                </Button>
               </>
-            }
-            {userContext.isLogged &&
+            )}
+            {userContext.isLogged && (
               <>
-                <a className={styles.books} href="/books">Мои бронирования</a>
-                <Dropdown.Wrapper title={<span><PeopleIcon />{userContext.login || 'Unknown'}</span>}>
+                <a className={styles.books} href="/books">
+                  Мои бронирования
+                </a>
+                <Dropdown.Wrapper
+                  title={
+                    <span>
+                      <PeopleIcon />
+                      {userContext.login || 'Unknown'}
+                    </span>
+                  }
+                >
                   <Dropdown.Item onClick={() => navigate('/settings')}>Настройки</Dropdown.Item>
-                  <hr/>
+                  <hr />
                   <Dropdown.Item>Выйти</Dropdown.Item>
                 </Dropdown.Wrapper>
               </>
-            }
+            )}
           </div>
           {displayLogin && <LoginModal onClose={() => setDisplayLogin(false)} onLogin={onLogin} />}
-          {displayRegistration && <RegistrationModal onClose={() => setDisplayRegistration(false)} onRegister={onRegister} />}
+          {displayRegistration && (
+            <RegistrationModal onClose={() => setDisplayRegistration(false)} onRegister={onRegister} />
+          )}
+          {displayCardRequisites && <></>}
         </header>
       </div>
 

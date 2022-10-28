@@ -11,4 +11,10 @@ export class OrderService {
 
     return res.json();
   }
+
+  public async getOrders() {
+    const res = await fetch('/api/order');
+
+    return res.json();
+  }
 }
