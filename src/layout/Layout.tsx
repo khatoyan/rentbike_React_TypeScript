@@ -14,7 +14,6 @@ import { useNavigate } from 'react-router-dom';
 export const Layout: React.FC = ({ children }) => {
   const [displayLogin, setDisplayLogin] = React.useState(false);
   const [displayRegistration, setDisplayRegistration] = React.useState(false);
-  const [displayCa, setDisplayRegistration] = React.useState(false);
 
   const userContext = React.useContext(UserContext);
   const navigate = useNavigate();
@@ -68,7 +67,6 @@ export const Layout: React.FC = ({ children }) => {
           {displayRegistration && (
             <RegistrationModal onClose={() => setDisplayRegistration(false)} onRegister={onRegister} />
           )}
-          {displayCardRequisites && <></>}
         </header>
       </div>
 
