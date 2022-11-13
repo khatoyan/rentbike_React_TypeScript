@@ -1,8 +1,7 @@
 import React from 'react';
-import { Button } from '../../../components/Button/Button';
-
-import { Input } from '../../../components/Input/Input';
+import { Input } from '@skbkontur/react-ui';
 import classes from '../UserSettings.module.css';
+import { Button } from '../../../components/Button/Button';
 import { CardRequisites } from '../../../types/domain/User';
 
 interface ChangeCardRequisitesFormProps extends CardRequisites {
@@ -25,19 +24,25 @@ export const ChangeCardRequisitesForm: React.FC<ChangeCardRequisitesFormProps> =
         Карта
       </label>
       <div className={classes.formRow}>
-        <Input type="text" placeholder="0000 0000 0000 0000" value={number} id="settings-number" onChange={setNumber} />
+        <Input
+          value={number}
+          id="settings-number"
+          onValueChange={setNumber}
+          mask={'9999 9999 9999 9999'}
+          placeholder="0000 0000 0000 0000"
+        />
       </div>
       <label className={classes.label} htmlFor="settings-date">
         Срок
       </label>
       <div className={classes.formRow}>
-        <Input type="month" value={date} placeholder="ММ/ГГ" id="settings-date" isShort onChange={setDate} />
+        <Input placeholder="ММ/ГГ" id="settings-date" mask="99/99" value={date} onValueChange={setDate} />
       </div>
       <label className={classes.label} htmlFor="settings-cvv">
         CVV
       </label>
       <div className={classes.formRow}>
-        <Input type="password" placeholder="•••" value={cvv} isShort id="settings-cvv" onChange={setCVV} />
+        <Input mask="999" value={cvv} type="password" placeholder="•••" id="settings-cvv" onValueChange={setCVV} />
       </div>
       <div className={classes.formRow}>
         <Button onClick={() => onClickSubmit({ number, date, cvv })}>Изменить</Button>
