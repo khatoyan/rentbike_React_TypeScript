@@ -21,10 +21,11 @@ export interface RegistrationFormData {
 
 interface Props {
   onClose: () => void;
+  onLoginClick: () => void;
   onRegister: (data: RegistrationFormData) => void;
 }
 
-export const RegistrationModal = ({ onClose, onRegister }: Props) => {
+export const RegistrationModal = ({ onClose, onRegister, onLoginClick }: Props) => {
   const [state, setState] = React.useState<RegistrationFormState>({
     email: '',
     password1: '',
@@ -49,6 +50,11 @@ export const RegistrationModal = ({ onClose, onRegister }: Props) => {
       email: state.email,
       password: state.password1,
     });
+  };
+
+  const handleLoginClick = () => {
+    onClose();
+    onLoginClick();
   };
 
   return (
@@ -96,6 +102,11 @@ export const RegistrationModal = ({ onClose, onRegister }: Props) => {
           <Row>
             <Button wide large onClick={handleRegisterClick}>
               Зарегистрироваться
+            </Button>
+          </Row>
+          <Row center>
+            <Button link onClick={handleLoginClick}>
+              Войти
             </Button>
           </Row>
         </Form>

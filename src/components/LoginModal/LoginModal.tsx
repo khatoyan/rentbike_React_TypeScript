@@ -15,9 +15,10 @@ export interface LoginFormData {
 interface Props {
   onLogin: (data: LoginFormData) => void;
   onClose: () => void;
+  onRegistrClick: () => void;
 }
 
-export const LoginModal = ({ onLogin, onClose }: Props) => {
+export const LoginModal = ({ onLogin, onClose, onRegistrClick }: Props) => {
   const validationContainerRef = useRef<ValidationContainer>(null);
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -31,6 +32,12 @@ export const LoginModal = ({ onLogin, onClose }: Props) => {
 
     onLogin({ email, password });
   };
+
+  const handleRegisterClick = () => {
+    onClose();
+    onRegistrClick();
+  };
+
   return (
     <Modal width={400} title={'Вход'} onClose={onClose}>
       <ValidationContainer ref={validationContainerRef}>
@@ -56,6 +63,11 @@ export const LoginModal = ({ onLogin, onClose }: Props) => {
         <Row>
           <Button wide large onClick={handleLoginClick}>
             Войти
+          </Button>
+        </Row>
+        <Row center>
+          <Button link onClick={handleRegisterClick}>
+            Зарегистрироваться
           </Button>
         </Row>
       </ValidationContainer>

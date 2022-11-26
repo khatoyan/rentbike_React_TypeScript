@@ -69,9 +69,19 @@ export const Layout: React.FC = ({ children }) => {
               </>
             )}
           </div>
-          {displayLogin && <LoginModal onClose={() => setDisplayLogin(false)} onLogin={onLogin} />}
+          {displayLogin && (
+            <LoginModal
+              onClose={() => setDisplayLogin(false)}
+              onRegistrClick={() => setDisplayRegistration(true)}
+              onLogin={onLogin}
+            />
+          )}
           {displayRegistration && (
-            <RegistrationModal onClose={() => setDisplayRegistration(false)} onRegister={onRegister} />
+            <RegistrationModal
+              onClose={() => setDisplayRegistration(false)}
+              onLoginClick={() => setDisplayLogin(true)}
+              onRegister={onRegister}
+            />
           )}
         </header>
       </div>
