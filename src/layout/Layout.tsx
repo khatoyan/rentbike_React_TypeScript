@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Logo from './img/logo.svg';
 import { Button } from '../components/Button/Button';
 
@@ -26,6 +26,12 @@ export const Layout: React.FC = ({ children }) => {
     await userContext.onLogin(data.email, data.password);
     setDisplayLogin(false);
   };
+
+  useEffect(() => {
+    if (!userContext.isLogged) {
+      navigate('/');
+    }
+  }, [userContext.isLogged]);
 
   return (
     <div className={styles.app}>
