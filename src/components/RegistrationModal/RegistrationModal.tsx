@@ -58,13 +58,21 @@ export const RegistrationModal = ({ onClose, onRegister }: Props) => {
           <Row>
             <Label htmlFor="reg-email">Email</Label>
             <ValidationWrapper validationInfo={validateEmail(state.email)}>
-              <Input id="reg-email" value={state.email} onValueChange={getFieldSetter('email')} />
+              <Input
+                width="100%"
+                size="medium"
+                id="reg-email"
+                value={state.email}
+                onValueChange={getFieldSetter('email')}
+              />
             </ValidationWrapper>
           </Row>
           <Row>
             <Label htmlFor="reg-password1">Пароль</Label>
             <ValidationWrapper validationInfo={validatePassword(state.password1)}>
               <Input
+                width="100%"
+                size="medium"
                 id="reg-password1"
                 type="password"
                 value={state.password1}
@@ -76,6 +84,8 @@ export const RegistrationModal = ({ onClose, onRegister }: Props) => {
             <Label htmlFor="reg-password2">Пароль</Label>
             <ValidationWrapper validationInfo={vatidateRepeatedPassword(state.password2, state.password1)}>
               <Input
+                width="100%"
+                size="medium"
                 id="reg-password2"
                 type="password"
                 value={state.password2}

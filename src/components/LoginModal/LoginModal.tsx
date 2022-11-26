@@ -37,13 +37,20 @@ export const LoginModal = ({ onLogin, onClose }: Props) => {
         <Row>
           <Label htmlFor="login-email">Email</Label>
           <ValidationWrapper validationInfo={validateEmail(email)}>
-            <Input id="login-email" value={email} onValueChange={setEmail} />
+            <Input width="100%" size="medium" id="login-email" value={email} onValueChange={setEmail} />
           </ValidationWrapper>
         </Row>
         <Row>
           <Label htmlFor="login-password">Пароль</Label>
           <ValidationWrapper validationInfo={validatePassword(password)}>
-            <Input id="login-password" type={'password'} value={password} onValueChange={setPassword} />
+            <Input
+              width="100%"
+              size="medium"
+              id="login-password"
+              type={'password'}
+              value={password}
+              onValueChange={setPassword}
+            />
           </ValidationWrapper>
         </Row>
         <Row>
