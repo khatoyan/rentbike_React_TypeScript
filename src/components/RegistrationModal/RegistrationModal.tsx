@@ -1,145 +1,116 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { ValidationContainer, ValidationWrapper } from '@skbkontur/react-ui-validations';
+
 import { Modal } from '../Modal/Modal';
 import { Form, Row } from '../Form/Form';
 import { Label } from '../Label/Label';
-import { Input } from '../Input/Input';
 import { Button } from '../Button/Button';
+import { validateEmail, validatePassword, vatidateRepeatedPassword } from '../../helpers/validators';
+import { Input } from '@skbkontur/react-ui';
+
+interface RegistrationFormState {
+  email: string;
+  password1: string;
+  password2: string;
+}
 
 export interface RegistrationFormData {
-  name?: string;
   email: string;
   password: string;
 }
 
 interface Props {
   onClose: () => void;
+  onLoginClick: () => void;
   onRegister: (data: RegistrationFormData) => void;
 }
 
-interface FieldState {
-  value: string;
-  error?: string;
-  warning?: string;
-}
-
-interface FormState {
-  name: FieldState;
-  email: FieldState;
-  password1: FieldState;
-  password2: FieldState;
-}
-
-const hasErrors = (state: FormState) => {
-  return Object.values(state).some((field) => !!field.error);
-};
-
-export const RegistrationModal = ({ onClose, onRegister }: Props) => {
-  const [state, setState] = React.useState<FormState>({
-    email: { value: '' },
-    name: { value: '' },
-    password1: { value: '', warning: 'Минимум 8 символов' },
-    password2: { value: '' },
+export const RegistrationModal = ({ onClose, onRegister, onLoginClick }: Props) => {
+  const [state, setState] = React.useState<RegistrationFormState>({
+    email: '',
+    password1: '',
+    password2: '',
   });
+  const validationContainerRef = useRef<ValidationContainer>(null);
 
-  const getFieldSetter = (field: keyof FormState) => {
+  const getFieldSetter = (field: keyof RegistrationFormState) => {
     return (value: string) => {
-      const newState = { ...state, [field]: { value } };
-      const validatedState = validate('change', newState);
-      setState(validatedState);
+      setState({ ...state, [field]: value });
     };
   };
 
-  const validate = (type: 'blur' | 'change' | 'submit', newState: FormState) => {
-    const validatedState = { ...newState };
-    if (type === 'submit') {
-      if (newState.password1.value.length < 8) {
-        validatedState.password1.error = 'Минимум 8 символов';
-      }
-      if (newState.password1.value !== newState.password2.value) {
-        validatedState.password2.error = 'Пароли не совпадают';
-      }
-    }
-    return validatedState;
-  };
+  const handleRegisterClick = async () => {
+    const isValid = await validationContainerRef.current.validate();
 
-  const handleRegisterClick = () => {
-    const validatedState = validate('submit', state);
-    if (hasErrors(validatedState)) {
-      setState(validatedState);
+    if (!isValid) {
       return;
     }
+
     onRegister({
-      email: state.email.value,
-      password: state.password1.value,
+      email: state.email,
+      password: state.password1,
     });
+  };
+
+  const handleLoginClick = () => {
+    onClose();
+    onLoginClick();
   };
 
   return (
     <Modal width={400} title={'Регистрация'} onClose={onClose}>
-      <Form>
-        {/*<Row>
-          <Label htmlFor="reg-name">Имя</Label>
-          <Input id="reg-name" type={'text'} value={name} onChange={setName}/>
-          <Label htmlFor="reg-name" error >Обязательное поле</Label>
-        </Row>*/}
-        <Row>
-          <Label htmlFor="reg-email">Email</Label>
-          <Input id="reg-email" type={'email'} value={state.email.value} onChange={getFieldSetter('email')} />
-          {state.email.error && (
-            <Label htmlFor="reg-email" error>
-              {state.email.error}
-            </Label>
-          )}
-          {state.email.warning && (
-            <Label htmlFor="reg-email" warning>
-              {state.email.warning}
-            </Label>
-          )}
-        </Row>
-        <Row>
-          <Label htmlFor="reg-password1">Пароль</Label>
-          <Input
-            id="reg-password1"
-            type={'password'}
-            value={state.password1.value}
-            onChange={getFieldSetter('password1')}
-          />
-          {state.password1.error && (
-            <Label htmlFor="reg-email" error>
-              {state.password1.error}
-            </Label>
-          )}
-          {state.password1.warning && (
-            <Label htmlFor="reg-email" warning>
-              {state.password1.warning}
-            </Label>
-          )}
-        </Row>
-        <Row>
-          <Label htmlFor="reg-password2">Пароль</Label>
-          <Input
-            id="reg-password2"
-            type={'password'}
-            value={state.password2.value}
-            onChange={getFieldSetter('password2')}
-          />
-          {state.password2.error && (
-            <Label htmlFor="reg-email" error>
-              {state.password2.error}
-            </Label>
-          )}
-          {state.password2.warning && (
-            <Label htmlFor="reg-email" warning>
-              {state.password2.warning}
-            </Label>
-          )}
-        </Row>
-        <Row>
-          <Button wide large onClick={handleRegisterClick}>
-            Зарегистрироваться
-          </Button>
-        </Row>
-      </Form>
+      <ValidationContainer ref={validationContainerRef}>
+        <Form>
+          <Row>
+            <Label htmlFor="reg-email">Email</Label>
+            <ValidationWrapper validationInfo={validateEmail(state.email)}>
+              <Input
+                width="100%"
+                size="medium"
+                id="reg-email"
+                value={state.email}
+                onValueChange={getFieldSetter('email')}
+              />
+            </ValidationWrapper>
+          </Row>
+          <Row>
+            <Label htmlFor="reg-password1">Пароль</Label>
+            <ValidationWrapper validationInfo={validatePassword(state.password1)}>
+              <Input
+                width="100%"
+                size="medium"
+                id="reg-password1"
+                type="password"
+                value={state.password1}
+                onValueChange={getFieldSetter('password1')}
+              />
+            </ValidationWrapper>
+          </Row>
+          <Row>
+            <Label htmlFor="reg-password2">Пароль</Label>
+            <ValidationWrapper validationInfo={vatidateRepeatedPassword(state.password2, state.password1)}>
+              <Input
+                width="100%"
+                size="medium"
+                id="reg-password2"
+                type="password"
+                value={state.password2}
+                onValueChange={getFieldSetter('password2')}
+              />
+            </ValidationWrapper>
+          </Row>
+          <Row>
+            <Button wide large onClick={handleRegisterClick}>
+              Зарегистрироваться
+            </Button>
+          </Row>
+          <Row center>
+            <Button link onClick={handleLoginClick}>
+              Войти
+            </Button>
+          </Row>
+        </Form>
+      </ValidationContainer>
     </Modal>
   );
 };

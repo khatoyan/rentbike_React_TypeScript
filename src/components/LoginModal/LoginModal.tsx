@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Modal } from '../Modal/Modal';
 import { Row } from '../Form/Form';
 import { Label } from '../Label/Label';
-import { Input } from '../Input/Input';
 import { Button } from '../Button/Button';
+import { ValidationContainer, ValidationWrapper } from '@skbkontur/react-ui-validations';
+import { validateEmail, validatePassword } from '../../helpers/validators';
+import { Input } from '@skbkontur/react-ui';
 
 export interface LoginFormData {
   email: string;
@@ -13,30 +15,62 @@ export interface LoginFormData {
 interface Props {
   onLogin: (data: LoginFormData) => void;
   onClose: () => void;
+  onRegistrClick: () => void;
 }
 
-export const LoginModal = ({ onLogin, onClose }: Props) => {
+export const LoginModal = ({ onLogin, onClose, onRegistrClick }: Props) => {
+  const validationContainerRef = useRef<ValidationContainer>(null);
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  const handleLoginClick = () => {
+  const handleLoginClick = async () => {
+    const isValid = await validationContainerRef.current.validate();
+
+    if (!isValid) {
+      return;
+    }
+
     onLogin({ email, password });
   };
+
+  const handleRegisterClick = () => {
+    onClose();
+    onRegistrClick();
+  };
+
   return (
     <Modal width={400} title={'Вход'} onClose={onClose}>
-      <Row>
-        <Label htmlFor="login-email">Email</Label>
-        <Input id="login-email" type={'email'} value={email} onChange={setEmail} />
-      </Row>
-      <Row>
-        <Label htmlFor="login-password">Пароль</Label>
-        <Input id="login-password" type={'password'} value={password} onChange={setPassword} />
-      </Row>
-      <Row>
-        <Button wide large onClick={handleLoginClick}>
-          Войти
-        </Button>
-      </Row>
+      <ValidationContainer ref={validationContainerRef}>
+        <Row>
+          <Label htmlFor="login-email">Email</Label>
+          <ValidationWrapper validationInfo={validateEmail(email)}>
+            <Input width="100%" size="medium" id="login-email" value={email} onValueChange={setEmail} />
+          </ValidationWrapper>
+        </Row>
+        <Row>
+          <Label htmlFor="login-password">Пароль</Label>
+          <ValidationWrapper validationInfo={validatePassword(password)}>
+            <Input
+              width="100%"
+              size="medium"
+              id="login-password"
+              type={'password'}
+              value={password}
+              onValueChange={setPassword}
+            />
+          </ValidationWrapper>
+        </Row>
+        <Row>
+          <Button wide large onClick={handleLoginClick}>
+            Войти
+          </Button>
+        </Row>
+        <Row center>
+          <Button link onClick={handleRegisterClick}>
+            Зарегистрироваться
+          </Button>
+        </Row>
+      </ValidationContainer>
     </Modal>
   );
 };

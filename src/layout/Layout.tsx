@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import Logo from './img/logo.svg';
 import { Button } from '../components/Button/Button';
 
@@ -14,7 +14,6 @@ import { useNavigate } from 'react-router-dom';
 export const Layout: React.FC = ({ children }) => {
   const [displayLogin, setDisplayLogin] = React.useState(false);
   const [displayRegistration, setDisplayRegistration] = React.useState(false);
-  const [displayCardRequisites, setDisplayCardRequisites] = React.useState(false);
 
   const userContext = React.useContext(UserContext);
   const navigate = useNavigate();
@@ -27,6 +26,12 @@ export const Layout: React.FC = ({ children }) => {
     await userContext.onLogin(data.email, data.password);
     setDisplayLogin(false);
   };
+
+  useEffect(() => {
+    if (!userContext.isLogged) {
+      navigate('/');
+    }
+  }, [userContext.isLogged]);
 
   return (
     <div className={styles.app}>
@@ -64,11 +69,20 @@ export const Layout: React.FC = ({ children }) => {
               </>
             )}
           </div>
-          {displayLogin && <LoginModal onClose={() => setDisplayLogin(false)} onLogin={onLogin} />}
-          {displayRegistration && (
-            <RegistrationModal onClose={() => setDisplayRegistration(false)} onRegister={onRegister} />
+          {displayLogin && (
+            <LoginModal
+              onClose={() => setDisplayLogin(false)}
+              onRegistrClick={() => setDisplayRegistration(true)}
+              onLogin={onLogin}
+            />
           )}
-          {displayCardRequisites && <></>}
+          {displayRegistration && (
+            <RegistrationModal
+              onClose={() => setDisplayRegistration(false)}
+              onLoginClick={() => setDisplayLogin(true)}
+              onRegister={onRegister}
+            />
+          )}
         </header>
       </div>
 

@@ -11,6 +11,7 @@ import { BikePreview } from './BikePreview/BikePreview';
 import { Bike } from '../../types/domain/Bike';
 import { RentPoint } from '../../types/domain/RentPoint';
 import { api } from '../../api';
+import { PointsMapModal } from '../../components/PointsMapModal';
 import { IPagination } from '../../types/common/pagination';
 import { Paging } from '../../components/Paging/Paging';
 import { getUpdatedQuery, getValueFromQuery } from '../../helpers/getValueFromQuery';
@@ -23,6 +24,7 @@ export const Catalog: React.FC = () => {
   const [selectedBike, setSelectedBike] = React.useState<Bike | null>(null);
   const [bikeList, setBikeList] = React.useState<IPagination<Bike>>(null);
   const [points, setPoints] = React.useState<RentPoint[]>([]);
+  const [showPointsMap, setShowPointsMap] = React.useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -78,9 +80,9 @@ export const Catalog: React.FC = () => {
           <Tabs.Item text="Все пункты" isActive={!activePointId} onClick={() => onChangePoint('')} />
         </Tabs.Wrapper>
         <aside className={styles.aside}>
-          <a href="#modal-map" className={cx(styles.link, styles.iconMap)}>
+          <div onClick={() => setShowPointsMap(true)} className={cx(styles.link, styles.iconMap)}>
             На карте
-          </a>
+          </div>
           &nbsp; &nbsp;
           {bikeList && (
             <span>
@@ -97,6 +99,7 @@ export const Catalog: React.FC = () => {
             <BikePreview key={bike._id} bike={bike} onRentClick={() => setSelectedBike(bike)} />
           ))}
       </section>
+      {showPointsMap && <PointsMapModal onClose={() => setShowPointsMap(false)} />}
       {bikeList && <Paging currentPage={currentPage} totalPages={bikeList.pages} onChangePage={onChangePage} />}
       {selectedBike && <BikeModal bike={selectedBike} onClose={onCloseBikeModal} />}
     </>

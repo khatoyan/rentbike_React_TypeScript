@@ -54,7 +54,7 @@
   "dependencies": {
     "@skbkontur/react-icons": "^5.2.1",
     "@skbkontur/react-ui": "^3.11.0-latest",
-    "@skbkontur/react-ui-validations": "^1.7.0",
+    "@skbkontur/react-ui-validations": "^1.11.0",
     "@skbkontur/ui-helpers": "^3.0.7",
     "classnames": "^2.3.1",
     "clsx": "^1.2.1",

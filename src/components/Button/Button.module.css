@@ -38,3 +38,16 @@
   border-color: var(--colorBgLight);
   color: var(--colorTextSecondary);
 }
+
+.link {
+  color: var(--colorLink);
+  background: none;
+  padding: 0;
+  border: none;
+  border-radius: none;
+  font-size: 1.125rem;
+}
+
+.link:hover {
+  text-decoration: underline;
+}

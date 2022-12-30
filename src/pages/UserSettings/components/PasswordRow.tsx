@@ -1,16 +1,26 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import classes from '../UserSettings.module.css';
 import { Button } from '../../../components/Button/Button';
 import { useMode } from '../../../hooks/useMode';
 import { api } from '../../../api';
+import { ValidationContainer, ValidationWrapper } from '@skbkontur/react-ui-validations';
+import { validatePassword, vatidateRepeatedPassword } from '../../../helpers/validators';
+import { Input } from '@skbkontur/react-ui';
 
 export const PasswordRow = () => {
   const { mode, toggleMode } = useMode('view');
   const [repeatPassword, setRepeatPassword] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const validationContainerRef = useRef<ValidationContainer>(null);
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
+    const isValid = await validationContainerRef.current.validate();
+
+    if (!isValid) {
+      return;
+    }
+
     api.user.updateUserInfo({ password });
     toggleMode();
   };
@@ -24,35 +34,43 @@ export const PasswordRow = () => {
         </div>
       )}
       {mode === 'edit' && (
-        <form className={classes.content}>
-          <label className={classes.label} htmlFor="settings-new-pass">
-            Новый пароль
-          </label>
-          <div className={classes.formRow}>
-            <input
-              type="password"
-              className="input"
-              value={password}
-              id="settings-new-pass"
-              onChange={(e) => setPassword(e.currentTarget.value)}
-            />
-          </div>
-          <label className={classes.label} htmlFor="settings-repeat-pass">
-            Повторите пароль
-          </label>
-          <div className={classes.formRow}>
-            <input
-              type="password"
-              className="input"
-              value={repeatPassword}
-              id="settings-repeat-pass"
-              onChange={(e) => setRepeatPassword(e.currentTarget.value)}
-            />
-          </div>
-          <div className={classes.formRow}>
-            <Button onClick={onSubmit}>Изменить</Button>
-          </div>
-        </form>
+        <ValidationContainer ref={validationContainerRef}>
+          <form className={classes.content}>
+            <label className={classes.label} htmlFor="settings-new-pass">
+              Новый пароль
+            </label>
+            <div className={classes.formRow}>
+              <ValidationWrapper validationInfo={validatePassword(password)}>
+                <Input
+                  width={300}
+                  size="medium"
+                  type="password"
+                  value={password}
+                  id="settings-new-pass"
+                  onValueChange={setPassword}
+                />
+              </ValidationWrapper>
+            </div>
+            <label className={classes.label} htmlFor="settings-repeat-pass">
+              Повторите пароль
+            </label>
+            <div className={classes.formRow}>
+              <ValidationWrapper validationInfo={vatidateRepeatedPassword(repeatPassword, password)}>
+                <Input
+                  width={300}
+                  size="medium"
+                  type="password"
+                  value={repeatPassword}
+                  id="settings-repeat-pass"
+                  onValueChange={setRepeatPassword}
+                />
+              </ValidationWrapper>
+            </div>
+            <div className={classes.formRow}>
+              <Button onClick={onSubmit}>Изменить</Button>
+            </div>
+          </form>
+        </ValidationContainer>
       )}
       <a className={classes.editLink} onClick={toggleMode}>
         {mode === 'edit' ? 'Отменить' : 'Изменить'}

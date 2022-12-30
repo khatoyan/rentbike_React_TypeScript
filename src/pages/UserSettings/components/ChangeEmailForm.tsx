@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import classes from '../UserSettings.module.css';
 import { Button } from '../../../components/Button/Button';
-import { api } from '../../../api';
+import { ValidationContainer, ValidationWrapper } from '@skbkontur/react-ui-validations';
+import { validateEmail } from '../../../helpers/validators';
+import { Input } from '@skbkontur/react-ui';
 
 interface ChangeEmailFormProps {
   email: string;
@@ -10,7 +12,18 @@ interface ChangeEmailFormProps {
 }
 
 export const ChangeEmailForm: React.FC<ChangeEmailFormProps> = ({ email: defaultEmail, onClickSubmit }) => {
+  const validationContainerRef = useRef<ValidationContainer>(null);
   const [email, setEmail] = React.useState(defaultEmail);
+
+  const handleSubmitClick = async () => {
+    const isValid = await validationContainerRef.current.validate();
+
+    if (!isValid) {
+      return;
+    }
+
+    onClickSubmit(email);
+  };
 
   return (
     <form className={classes.content}>
@@ -18,16 +31,14 @@ export const ChangeEmailForm: React.FC<ChangeEmailFormProps> = ({ email: default
         Электронная почта
       </label>
       <div className={classes.formRow}>
-        <input
-          type="email"
-          className="input"
-          value={email}
-          id="settings-email"
-          onChange={(e) => setEmail(e.currentTarget.value)}
-        />
+        <ValidationContainer ref={validationContainerRef}>
+          <ValidationWrapper validationInfo={validateEmail(email)}>
+            <Input value={email} width={300} size="medium" id="settings-email" onValueChange={setEmail} />
+          </ValidationWrapper>
+        </ValidationContainer>
       </div>
       <div className={classes.formRow}>
-        <Button onClick={() => onClickSubmit(email)}>Изменить</Button>
+        <Button onClick={handleSubmitClick}>Изменить</Button>
       </div>
     </form>
   );

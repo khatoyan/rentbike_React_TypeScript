@@ -5,15 +5,24 @@ import styles from './Button.module.css';
 interface Props {
   children: React.ReactNode;
   onClick?: () => void;
-  use?: 'default' | 'light' | 'wide' | 'large' | 'combined';
   disabled?: boolean;
   className?: string;
   light?: boolean;
   wide?: boolean;
   large?: boolean;
+  link?: boolean;
 }
 
-export const Button: React.FC<Props> = ({ disabled, className, onClick, use, children, light, wide, large }: Props) => {
+export const Button: React.FC<Props> = ({
+  disabled,
+  className,
+  onClick,
+  link,
+  children,
+  light,
+  wide,
+  large,
+}: Props) => {
   const clickHander = () => {
     if (disabled) return;
     onClick && onClick();
@@ -25,6 +34,7 @@ export const Button: React.FC<Props> = ({ disabled, className, onClick, use, chi
         [styles.light]: light,
         [styles.wide]: wide,
         [styles.large]: large,
+        [styles.link]: link,
       })}
       onClick={clickHander}
     >

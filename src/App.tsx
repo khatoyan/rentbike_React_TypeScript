@@ -1,11 +1,10 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
+
 import { UserContext } from './context/UserContext';
 import { Layout } from './layout';
 import { Router } from './Router';
-import { BrowserRouter } from 'react-router-dom';
-import { RegistrationFormData } from './components/RegistrationModal/RegistrationModal';
 import { api } from './api';
-import { LoginFormData } from './components/LoginModal/LoginModal';
 
 export const App = () => {
   const [userData, setUserData] = React.useState({
