@@ -58,6 +58,7 @@
     "@skbkontur/ui-helpers": "^3.0.7",
     "classnames": "^2.3.1",
     "clsx": "^1.2.1",
+    "dayjs": "1.11.6",
     "qs": "^6.11.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

@@ -35,3 +35,7 @@
 .bikeCardNoFooter:hover {
   margin-bottom: 0;
 }
+
+.bikeCardHover {
+  cursor: pointer;
+}

@@ -30,12 +30,14 @@ export const Catalog: React.FC = () => {
   const activePointId = getValueFromQuery(location.search, pointIdQueryName) || '';
 
   React.useEffect(() => {
-    (async () => {
-      const [a, b] = await Promise.all([api.catalog.getBikes(currentPage, activePointId), api.point.getPoints()]);
-      setBikeList(a);
-      setPoints(b);
-    })();
+    loadBikeList();
   }, [currentPage, activePointId]);
+
+  const loadBikeList = async () => {
+    const [a, b] = await Promise.all([api.catalog.getBikes(currentPage, activePointId), api.point.getPoints()]);
+    setBikeList(a);
+    setPoints(b);
+  };
 
   const onChangePoint = (pointId: string) => {
     const query = getUpdatedQuery(location.search, {
@@ -54,7 +56,10 @@ export const Catalog: React.FC = () => {
     navigate(`${location.pathname}${query}`);
   };
 
-  const onCloseBikeModal = () => {
+  const onCloseBikeModal = (bikeIsBooked: boolean) => {
+    if (bikeIsBooked) {
+      loadBikeList();
+    }
     setSelectedBike(null);
   };
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Logo from './img/logo.svg';
 import { Button } from '../components/Button/Button';
 
@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom';
 export const Layout: React.FC = ({ children }) => {
   const [displayLogin, setDisplayLogin] = React.useState(false);
   const [displayRegistration, setDisplayRegistration] = React.useState(false);
-  const [displayCa, setDisplayRegistration] = React.useState(false);
+  const [displayCardRequisites, setDisplayCardRequisites] = React.useState(false);
 
   const userContext = React.useContext(UserContext);
   const navigate = useNavigate();

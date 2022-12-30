@@ -8,19 +8,19 @@ import { Button } from '../../../components/Button/Button';
 
 interface BikePreviewProps {
   bike: Bike;
-  onRentClick: () => void;
+  onDetailClick?: () => void;
+  onRentClick?: () => void;
 }
 
-export const BikePreview: React.FC<BikePreviewProps> = ({ bike, onRentClick }: BikePreviewProps) => {
-  const withoutFooter = false;
+export const BikePreview: React.FC<BikePreviewProps> = ({ bike, onRentClick, onDetailClick }: BikePreviewProps) => {
   return (
-    <div className={styles.bikeCard}>
-      <a className={cx(styles.bikeCardPreview, { [styles.bikeCardNoFooter]: withoutFooter })}>
+    <div className={cx(styles.bikeCard, { [styles.bikeCardHover]: onDetailClick })} onClick={onDetailClick}>
+      <a className={cx(styles.bikeCardPreview)}>
         <img src={`/api/catalog/bike/${bike._id}/img`} />
       </a>
       <h4>{bike.name}</h4>
       <p>{bike.cost} ₽/час</p>
-      {!withoutFooter && (
+      {onRentClick && (
         <footer className={styles.bikeCardFooter}>
           <Button onClick={onRentClick}>Арендовать</Button>
         </footer>
