@@ -1,8 +1,7 @@
-import { IPagination } from '../types/common/pagination';
-import { Bike } from '../types/domain/Bike';
+import { Bike, Pagination } from './Api.types';
 
 export class CatalogService {
-  public async getBikes(page = 1, pointId = ''): Promise<IPagination<Bike>> {
+  public async getBikes(page = 1, pointId = ''): Promise<Pagination<Bike>> {
     const res = await fetch(`/api/catalog/${pointId}?page=${page}`);
     return res.json();
   }

@@ -1,4 +1,4 @@
-import { Order } from '../types/domain/Order';
+import { Order } from './Api.types';
 
 export class OrderService {
   public async createOrder(bikeId: string): Promise<Order> {

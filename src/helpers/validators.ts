@@ -55,6 +55,8 @@ export const vatidateRepeatedPassword = (value: string, repeatedPassword: string
       type: 'lostfocus',
     };
   }
+
+  return null;
 };
 
 export const validateCardNumber = (value: string): ValidationInfo | null => {

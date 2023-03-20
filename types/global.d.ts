@@ -1,7 +1,4 @@
-declare module '*.css' {
-  const value: Record<string, string>;
-  export default value;
-}
+declare module '*.module.css';
 
 declare module '*.svg' {
   const value: React.FunctionComponent<React.SVGAttributes<SVGElement>>;

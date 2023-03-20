@@ -1,10 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { ValidationContainer, ValidationWrapper } from '@skbkontur/react-ui-validations';
 
-import { Modal } from '../Modal/Modal';
-import { Form, Row } from '../Form/Form';
-import { Label } from '../Label/Label';
-import { Button } from '../Button/Button';
+import { Modal } from '../Modal';
+import { Form, Row } from '../Form';
+import { Label } from '../Label';
+import { Button } from '../Button';
 import { validateEmail, validatePassword, vatidateRepeatedPassword } from '../../helpers/validators';
 import { Input } from '@skbkontur/react-ui';
 
@@ -26,7 +26,7 @@ interface Props {
 }
 
 export const RegistrationModal = ({ onClose, onRegister, onLoginClick }: Props) => {
-  const [state, setState] = React.useState<RegistrationFormState>({
+  const [state, setState] = useState<RegistrationFormState>({
     email: '',
     password1: '',
     password2: '',
@@ -40,7 +40,7 @@ export const RegistrationModal = ({ onClose, onRegister, onLoginClick }: Props) 
   };
 
   const handleRegisterClick = async () => {
-    const isValid = await validationContainerRef.current.validate();
+    const isValid = validationContainerRef.current && (await validationContainerRef.current.validate());
 
     if (!isValid) {
       return;

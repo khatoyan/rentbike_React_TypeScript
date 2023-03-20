@@ -1,4 +1,4 @@
-import { RentPoint } from '../types/domain/RentPoint';
+import { RentPoint } from './Api.types';
 
 export class PointService {
   public async getPoints(): Promise<RentPoint[]> {

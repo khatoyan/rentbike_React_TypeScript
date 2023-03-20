@@ -1,37 +1,33 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import Logo from './img/logo.svg';
-import { Button } from '../components/Button/Button';
 
-import styles from './Layout.module.css';
 import { RegistrationFormData, RegistrationModal } from '../components/RegistrationModal/RegistrationModal';
 import { LoginFormData, LoginModal } from '../components/LoginModal/LoginModal';
-import { UserContext } from '../context/UserContext';
+import { Button } from '../components/Button';
 import { Dropdown } from '../components/Dropdown';
+import PeopleIcon from '../img/people.svg';
+import { UserData } from '../api/Api.types';
 
-import { PeopleIcon } from '../components/PeopleIcon/PeopleIcon';
-import { useNavigate } from 'react-router-dom';
+import styles from './Layout.module.css';
 
-export const Layout: React.FC = ({ children }) => {
-  const [displayLogin, setDisplayLogin] = React.useState(false);
-  const [displayRegistration, setDisplayRegistration] = React.useState(false);
+interface LayoutProps {
+  userData: null | UserData;
+  onLogin: (login: string, password: string) => Promise<void>;
+  onRegister: (login: string, password: string) => Promise<void>;
+}
 
-  const userContext = React.useContext(UserContext);
-  const navigate = useNavigate();
+export const Layout: React.FC<LayoutProps> = ({ children, userData, onLogin, onRegister }) => {
+  const [displayLogin, setDisplayLogin] = useState(false);
+  const [displayRegistration, setDisplayRegistration] = useState(false);
 
-  const onRegister = async (data: RegistrationFormData) => {
-    await userContext.onRegister(data.email, data.password);
+  const handleRegister = async (data: RegistrationFormData) => {
+    await onRegister(data.email, data.password);
     setDisplayRegistration(false);
   };
-  const onLogin = async (data: LoginFormData) => {
-    await userContext.onLogin(data.email, data.password);
+  const handleLogin = async (data: LoginFormData) => {
+    await onLogin(data.email, data.password);
     setDisplayLogin(false);
   };
-
-  useEffect(() => {
-    if (!userContext.isLogged) {
-      navigate('/');
-    }
-  }, [userContext.isLogged]);
 
   return (
     <div className={styles.app}>
@@ -41,7 +37,7 @@ export const Layout: React.FC = ({ children }) => {
             <Logo />
           </a>
           <div className={styles.headerButtons}>
-            {!userContext.isLogged && (
+            {!userData?.login && (
               <>
                 <Button onClick={() => setDisplayLogin(true)}>Войти</Button>
                 <Button light onClick={() => setDisplayRegistration(true)}>
@@ -49,55 +45,44 @@ export const Layout: React.FC = ({ children }) => {
                 </Button>
               </>
             )}
-            {userContext.isLogged && (
+            {userData?.login && (
               <>
                 <a className={styles.books} href="/books">
                   Мои бронирования
                 </a>
                 <Dropdown.Wrapper
                   title={
-                    <span>
+                    <span className={styles.login}>
                       <PeopleIcon />
-                      {userContext.login || 'Unknown'}
+                      &nbsp;
+                      {userData.login || 'Unknown'}
                     </span>
                   }
                 >
-                  <Dropdown.Item onClick={() => navigate('/settings')}>Настройки</Dropdown.Item>
-                  <hr />
-                  <Dropdown.Item>Выйти</Dropdown.Item>
+                  {/* eslint-disable-next-line no-console */}
+                  <Dropdown.Item onClick={() => console.log('redirect to settings')}>Настройки</Dropdown.Item>
                 </Dropdown.Wrapper>
               </>
             )}
           </div>
           {displayLogin && (
             <LoginModal
+              onLogin={handleLogin}
               onClose={() => setDisplayLogin(false)}
               onRegistrClick={() => setDisplayRegistration(true)}
-              onLogin={onLogin}
             />
           )}
           {displayRegistration && (
             <RegistrationModal
+              onRegister={handleRegister}
               onClose={() => setDisplayRegistration(false)}
               onLoginClick={() => setDisplayLogin(true)}
-              onRegister={onRegister}
             />
           )}
         </header>
       </div>
 
       <div className={styles.main}>{children}</div>
-
-      <div className={styles.footer}>
-        <footer className={styles.footerContent}>
-          <a href="#" className={styles.footerLink}>
-            <b>СКБ Контур</b> c 1988 года
-          </a>
-          <a href="#" className={styles.footerLink}>
-            Правовые документы
-          </a>
-        </footer>
-      </div>
     </div>
   );
 };
