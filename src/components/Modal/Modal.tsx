@@ -1,5 +1,5 @@
 import React from 'react';
-import cx from 'classnames';
+import { clsx } from 'clsx';
 
 import Close from '../../img/close.svg';
 
@@ -14,7 +14,7 @@ interface Props {
 
 export const Modal: React.FC<Props> = ({ width, title, onClose, children }: Props) => {
   return (
-    <div className={cx(styles.modal, { [styles.modalActive]: true })} id="modal-card">
+    <div className={clsx(styles.modal, { [styles.modalActive]: true })} id="modal-card">
       <a href="#" className={styles.background} onClick={onClose}></a>
       <div style={{ width }} className={styles.content}>
         <header className={styles.title}>

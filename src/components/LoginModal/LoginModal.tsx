@@ -1,8 +1,9 @@
-import React, { useRef } from 'react';
-import { Modal } from '../Modal/Modal';
-import { Row } from '../Form/Form';
-import { Label } from '../Label/Label';
-import { Button } from '../Button/Button';
+import React, { useRef, useState } from 'react';
+
+import { Modal } from '../Modal';
+import { Row } from '../Form';
+import { Label } from '../Label';
+import { Button } from '../Button';
 import { ValidationContainer, ValidationWrapper } from '@skbkontur/react-ui-validations';
 import { validateEmail, validatePassword } from '../../helpers/validators';
 import { Input } from '@skbkontur/react-ui';
@@ -20,11 +21,11 @@ interface Props {
 
 export const LoginModal = ({ onLogin, onClose, onRegistrClick }: Props) => {
   const validationContainerRef = useRef<ValidationContainer>(null);
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleLoginClick = async () => {
-    const isValid = await validationContainerRef.current.validate();
+    const isValid = validationContainerRef.current && (await validationContainerRef.current.validate());
 
     if (!isValid) {
       return;

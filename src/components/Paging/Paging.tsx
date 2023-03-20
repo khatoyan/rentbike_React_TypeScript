@@ -1,31 +1,44 @@
-import React from 'react';
-import cx from 'classnames';
+import React, { useMemo } from 'react';
+import { clsx } from 'clsx';
+import { useSearchParams } from 'react-router-dom';
 
 import styles from './Paging.module.css';
 
-interface Props {
-  currentPage: number;
+interface PagingProps {
   totalPages: number;
-  onChangePage: (page: number) => void;
+  paramQueryName?: string;
 }
 
-export const Paging = ({ currentPage, totalPages, onChangePage }: Props) => {
+export const Paging = ({ totalPages, paramQueryName = 'page' }: PagingProps) => {
+  const [searchParams, updateSearchParams] = useSearchParams();
+
+  const currentPage = useMemo(() => {
+    const candidate = searchParams.get(paramQueryName);
+    return candidate ? Number(candidate) : 1;
+  }, [searchParams]);
+
+  const handlePageChange = (value: number) => {
+    searchParams.set(paramQueryName, value.toString());
+    updateSearchParams(searchParams);
+  };
+
   const list = new Array(totalPages)
     .fill(null)
     .map((tmp, index) => ({ number: index + 1, isActive: currentPage === index + 1 }));
+
   return (
     <section className={styles.pagination}>
       {list.map((page) => (
         <a
           key={`num_${page.number}`}
-          className={cx(styles.link, { [styles.active]: page.isActive })}
-          onClick={() => onChangePage(page.number)}
+          className={clsx(styles.link, { [styles.active]: page.isActive })}
+          onClick={() => handlePageChange(page.number)}
         >
           {page.number}
         </a>
       ))}
       {currentPage < totalPages && (
-        <a className={styles.next} onClick={() => onChangePage(currentPage + 1)}>
+        <a className={styles.next} onClick={() => handlePageChange(currentPage + 1)}>
           Дальше
         </a>
       )}

@@ -1,8 +1,9 @@
 import React from 'react';
-import cx from 'classnames';
+import { clsx } from 'clsx';
+
 import styles from './Button.module.css';
 
-interface Props {
+interface ButtonProps {
   children: React.ReactNode;
   onClick?: () => void;
   disabled?: boolean;
@@ -13,30 +14,24 @@ interface Props {
   link?: boolean;
 }
 
-export const Button: React.FC<Props> = ({
-  disabled,
-  className,
-  onClick,
-  link,
-  children,
-  light,
-  wide,
-  large,
-}: Props) => {
-  const clickHander = () => {
-    if (disabled) return;
-    onClick && onClick();
+export const Button: React.FC<ButtonProps> = ({ disabled, className, onClick, link, children, light, wide, large }) => {
+  const handleClick = () => {
+    if (disabled || !onClick) {
+      return;
+    }
+    onClick();
   };
+
   return (
     <a
-      className={cx(className, styles.button, {
+      className={clsx(className, styles.button, {
         [styles.disabled]: disabled,
         [styles.light]: light,
         [styles.wide]: wide,
         [styles.large]: large,
         [styles.link]: link,
       })}
-      onClick={clickHander}
+      onClick={handleClick}
     >
       {children}
     </a>

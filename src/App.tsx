@@ -1,26 +1,26 @@
-import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 
-import { UserContext } from './context/UserContext';
 import { Layout } from './layout';
 import { Router } from './Router';
 import { api } from './api';
+import { UserData } from './api/Api.types';
+import classes from './App.module.css';
 
 export const App = () => {
-  const [userData, setUserData] = React.useState({
-    isLogged: false,
-    login: null,
-    cardRequisites: null,
-  });
+  const [userData, setUserData] = useState<null | UserData>(null);
+  const [loading, setLoading] = useState(true);
 
   const loadCurrentUser = async () => {
+    setLoading(true);
     const data = await api.user.getCurrentUser();
-    if (!data.error) {
-      setUserData({ isLogged: true, login: data.login, cardRequisites: data.cardRequisites });
+
+    if (data?.login) {
+      setUserData({ login: data.login, cardRequisites: data.cardRequisites });
     }
+    setLoading(false);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     loadCurrentUser();
   }, []);
 
@@ -28,17 +28,19 @@ export const App = () => {
     await api.user.register(login, password);
     loadCurrentUser();
   };
+
   const onLogin = async (login: string, password: string) => {
     await api.user.login(login, password);
     loadCurrentUser();
   };
+
+  if (loading) {
+    return <div className={classes.loader}>Загружаем сервис...</div>;
+  }
+
   return (
-    <UserContext.Provider value={{ ...userData, onLogin, onRegister, update: loadCurrentUser }}>
-      <BrowserRouter basename="/">
-        <Layout>
-          <Router />
-        </Layout>
-      </BrowserRouter>
-    </UserContext.Provider>
+    <Layout userData={userData} onRegister={onRegister} onLogin={onLogin}>
+      <Router />
+    </Layout>
   );
 };

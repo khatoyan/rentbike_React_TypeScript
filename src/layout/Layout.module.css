@@ -26,7 +26,8 @@
 
 .headerButtons {
   margin-left: auto;
-  display: block;
+  display: flex;
+  align-items: center;
 }
 
 .headerButtons > * {
@@ -37,25 +38,12 @@
   padding: calc(var(--m) * 2) var(--pad) calc(var(--m) * 5);
 }
 
-.footer {
-  padding: 0 var(--pad);
-}
-
-.footerContent {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  font-size: 0.875rem;
-  color: #eee;
-  border-top: 1px solid var(--colorBorder);
-  padding: calc(var(--m) * 3) 0;
-}
-
-.footerLink {
-  color: var(--colorTextSecondary);
-}
-
 .books {
   color: var(--colorMain);
   margin-right: calc(var(--m) * 6);
+}
+
+.login {
+  display: flex;
+  align-items: center;
 }

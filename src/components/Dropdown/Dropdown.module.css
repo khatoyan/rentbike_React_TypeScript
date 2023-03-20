@@ -6,6 +6,8 @@
 .title {
   cursor: pointer;
   color: var(--colorMain);
+  display: flex;
+  align-items: baseline;
 }
 
 .menu {

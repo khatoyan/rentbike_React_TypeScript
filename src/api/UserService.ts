@@ -1,13 +1,7 @@
-import { CardRequisites } from 'src/types/domain/User';
-
-interface IUpdateUserInfo {
-  login?: string;
-  password?: string;
-  cardRequisites?: CardRequisites;
-}
+import { UpdateUserInfo, UserData } from './Api.types';
 
 export class UserService {
-  public async getCurrentUser() {
+  public async getCurrentUser(): Promise<UserData> {
     const res = await fetch('/api/users/current', {
       method: 'GET',
     });
@@ -32,7 +26,7 @@ export class UserService {
     return res.json();
   }
 
-  public async updateUserInfo(body: IUpdateUserInfo) {
+  public async updateUserInfo(body: UpdateUserInfo) {
     const res = await fetch('/api/users/current', {
       method: 'PUT',
       headers: { 'Content-type': 'application/json' },
