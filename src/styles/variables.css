@@ -8,4 +8,6 @@
   --colorTextError: #cb3d35;
   --colorBgLight: #f6f6f6;
   --headerHeight: calc(var(--m) * 15);
+  --footerHeight: 68px;
+  --catalogHeaderHeight: 40px;
 }
