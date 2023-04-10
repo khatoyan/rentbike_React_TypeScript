@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Logo from './img/logo.svg';
 
 import { RegistrationFormData, RegistrationModal } from '../components/RegistrationModal/RegistrationModal';
@@ -7,6 +8,7 @@ import { Button } from '../components/Button';
 import { Dropdown } from '../components/Dropdown';
 import PeopleIcon from '../img/people.svg';
 import { UserData } from '../api/Api.types';
+import { Footer } from '../components/Footer';
 
 import styles from './Layout.module.css';
 
@@ -19,6 +21,17 @@ interface LayoutProps {
 export const Layout: React.FC<LayoutProps> = ({ children, userData, onLogin, onRegister }) => {
   const [displayLogin, setDisplayLogin] = useState(false);
   const [displayRegistration, setDisplayRegistration] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!userData?.login) {
+      navigate('/');
+    }
+  }, [navigate]);
+
+  const handleSettingsButton = () => {
+    navigate('/settings');
+  };
 
   const handleRegister = async (data: RegistrationFormData) => {
     await onRegister(data.email, data.password);
@@ -60,7 +73,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, userData, onLogin, onR
                   }
                 >
                   {/* eslint-disable-next-line no-console */}
-                  <Dropdown.Item onClick={() => console.log('redirect to settings')}>Настройки</Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleSettingsButton()}>Настройки</Dropdown.Item>
                 </Dropdown.Wrapper>
               </>
             )}
@@ -83,6 +96,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, userData, onLogin, onR
       </div>
 
       <div className={styles.main}>{children}</div>
+      <Footer />
     </div>
   );
 };

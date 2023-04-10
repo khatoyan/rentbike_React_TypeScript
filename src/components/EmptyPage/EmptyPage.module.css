@@ -1,0 +1,19 @@
+.emptyMain {
+  color: var(--colorTextSecondary);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: calc(100vh - var(--headerHeight) - var(--footerHeight) - var(--catalogHeaderHeight));
+}
+
+.emptyMain h1 {
+  align-self: flex-start;
+}
+
+.emptyWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
