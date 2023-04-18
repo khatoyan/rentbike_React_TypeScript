@@ -2,27 +2,33 @@ import React from 'react';
 import Map from '../../img/map.png';
 
 import styles from './BikeCardModal.module.css';
+import clsx from 'clsx';
 
 import { Modal } from '../Modal';
 import { Bike } from 'src/api/Api.types';
 import { Button } from '../Button';
 
-interface BikeCardModalProps {
+interface RentedModalProps {
   bike: Bike;
   onClose: () => void;
-  onRent?: () => void;
+  onPass: () => void;
 }
 
-export const BikeCardModal: React.FC<BikeCardModalProps> = ({ bike, onClose, onRent }) => {
+export const RentedModal: React.FC<RentedModalProps> = ({ bike, onClose, onPass }) => {
   return (
     <Modal width={800} onClose={onClose} title={bike.name}>
       <div className={styles.infoWrapper}>
         <img className={styles.bikeModalImg} src={`/api/catalog/bike/${bike._id}/img`} alt="bigBike" />
-        <div className={styles.info}>
-          <p className={styles.codeWrapper}>{bike.cost} р/час</p>
-          <a href="#mapModal">
-            <Button onClick={onRent}>Арендовать</Button>
-          </a>
+
+        <div className={clsx(styles.info, styles.infoRented)}>
+          <p>Время аренды</p>
+          <h1 className={styles.onRentTime}>1ч 23 мин</h1>
+          <div className={styles.buttonWrapper}>
+            <a href="#mapModal">
+              <Button onClick={onPass}>Сдать</Button>
+            </a>
+            <span>640 ₽</span>
+          </div>
         </div>
       </div>
       <div className={styles.mapWrapper}>

@@ -5,24 +5,23 @@ import styles from './BikeCardModal.module.css';
 
 import { Modal } from '../Modal';
 import { Bike } from 'src/api/Api.types';
-import { Button } from '../Button';
 
-interface BikeCardModalProps {
+interface BookingModalProps {
   bike: Bike;
+  qrCode: string;
   onClose: () => void;
-  onRent?: () => void;
 }
 
-export const BikeCardModal: React.FC<BikeCardModalProps> = ({ bike, onClose, onRent }) => {
+export const BookingModal: React.FC<BookingModalProps> = ({ bike, qrCode, onClose }) => {
   return (
     <Modal width={800} onClose={onClose} title={bike.name}>
       <div className={styles.infoWrapper}>
         <img className={styles.bikeModalImg} src={`/api/catalog/bike/${bike._id}/img`} alt="bigBike" />
         <div className={styles.info}>
-          <p className={styles.codeWrapper}>{bike.cost} р/час</p>
-          <a href="#mapModal">
-            <Button onClick={onRent}>Арендовать</Button>
-          </a>
+          <p className={styles.codeWrapper}>
+            Код получения <span className={styles.keyCode}>12367</span>
+          </p>
+          <img src={qrCode} alt="QR" />
         </div>
       </div>
       <div className={styles.mapWrapper}>

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Logo from './img/logo.svg';
 
 import { RegistrationFormData, RegistrationModal } from '../components/RegistrationModal/RegistrationModal';
@@ -10,6 +9,7 @@ import PeopleIcon from '../img/people.svg';
 import { UserData } from '../api/Api.types';
 
 import styles from './Layout.module.css';
+import { useNavigate } from 'react-router-dom';
 
 interface LayoutProps {
   userData: null | UserData;

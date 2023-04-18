@@ -5,24 +5,20 @@ import styles from './BikeCardModal.module.css';
 
 import { Modal } from '../Modal';
 import { Bike } from 'src/api/Api.types';
-import { Button } from '../Button';
 
-interface BikeCardModalProps {
+interface PassedModalProps {
   bike: Bike;
   onClose: () => void;
-  onRent?: () => void;
 }
 
-export const BikeCardModal: React.FC<BikeCardModalProps> = ({ bike, onClose, onRent }) => {
+export const PassedModal: React.FC<PassedModalProps> = ({ bike, onClose }) => {
   return (
     <Modal width={800} onClose={onClose} title={bike.name}>
       <div className={styles.infoWrapper}>
         <img className={styles.bikeModalImg} src={`/api/catalog/bike/${bike._id}/img`} alt="bigBike" />
         <div className={styles.info}>
-          <p className={styles.codeWrapper}>{bike.cost} р/час</p>
-          <a href="#mapModal">
-            <Button onClick={onRent}>Арендовать</Button>
-          </a>
+          <p>21 июня 15:23–16:48</p>
+          <h1 className={styles.finalCost}>640 ₽</h1>
         </div>
       </div>
       <div className={styles.mapWrapper}>

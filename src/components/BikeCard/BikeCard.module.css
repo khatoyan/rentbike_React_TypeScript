@@ -7,8 +7,13 @@
 
 .bikeCard:hover {
   position: relative;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
-  margin-bottom: -38px;
+  box-shadow: 2px 2px calc(var(--m) * 1) rgba(0, 0, 0, 0.1);
+}
+
+.bigCard:hover {
+  position: relative;
+  box-shadow: 2px 2px calc(var(--m) * 1) rgba(0, 0, 0, 0.1);
+  margin-bottom: calc(var(--footerHeight) * -1);
 }
 
 .imgLink {

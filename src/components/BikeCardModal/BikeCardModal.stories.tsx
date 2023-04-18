@@ -1,4 +1,5 @@
 import React from 'react';
+import bikeDefaultImg from '../../img/b3.png';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { BikeCardModal } from './BikeCardModal';
@@ -15,5 +16,5 @@ BikeModalDefault.args = {
   onClose: () => {
     /*console.log('Hello')*/
   },
-  bike: { _id: '', name: 'Stels XT280 V010', cost: 320, img: '../../img/logo.svg' },
+  bike: { _id: '', name: 'Stels XT280 V010', cost: 320, img: bikeDefaultImg },
 };
