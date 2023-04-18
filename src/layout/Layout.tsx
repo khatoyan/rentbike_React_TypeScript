@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Logo from './img/logo.svg';
 
 import { RegistrationFormData, RegistrationModal } from '../components/RegistrationModal/RegistrationModal';
@@ -19,6 +20,13 @@ interface LayoutProps {
 export const Layout: React.FC<LayoutProps> = ({ children, userData, onLogin, onRegister }) => {
   const [displayLogin, setDisplayLogin] = useState(false);
   const [displayRegistration, setDisplayRegistration] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!userData?.login) {
+      navigate('/');
+    }
+  }, [navigate]);
 
   const handleRegister = async (data: RegistrationFormData) => {
     await onRegister(data.email, data.password);
