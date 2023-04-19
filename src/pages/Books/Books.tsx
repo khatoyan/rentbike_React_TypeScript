@@ -1,51 +1,70 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import { api } from '../../api';
-import { RentPoint, Bike, Pagination } from '../../api/Api.types';
-import { useSearchParams } from '../../hooks/useSearchParams';
-
+import { Bike, Order } from '../../api/Api.types';
+import { getOnRentTime } from '../../helpers/getOnRentTime';
+import { CatalogSection } from '../Catalog/CatalogSection';
 import { EmptyPage } from '../../components/EmptyPage';
-import { BikeCard } from '../../components/BikeCard';
-import { BookingModal } from '../../components/BikeCardModal';
+import { BookingModal, RentedModal } from '../../components/BikeCardModal';
 
 import styles from './Books.module.css';
 
-const pageQueryName = 'page';
-const pointIdQueryName = 'pointId';
-
 export const Books: React.FC = () => {
-  const [rentedBikes, setRentedBikes] = useState<Bike[]>([]);
+  const { orderId } = useParams();
+  const [activeOrder, setActiveOrder] = useState<Order>();
+  const [rentedBike, setRentedBike] = useState<Bike>();
   const [passedBikes, setPassedBikes] = useState<Bike[]>([]);
+  const [rentedBikes, setRentedBikes] = useState<Bike[]>([]);
   const [currBike, setCurrBike] = useState<Bike>();
   const [qrCode, setQrCode] = useState('');
-  const [isRented, setRented] = useState(false);
 
   const [isBookingModalVisible, setBookingModalVisible] = useState(false);
+  const [isRentedModalVisible, setRentedModalVisible] = useState(false);
 
   useEffect(() => {
     getOrders();
+    handleStartRent();
   }, []);
 
   const getOrders = async () => {
     const orders = await api.order.getOrders();
+    const passedOrders = await api.order.getCompletedOrders();
 
-    orders[0].end = '';
-    /*
-      Заглушка а.к.а отсканировали QR код и байк арендовался
-    */
+    api.order.startRent(orders[0]._id);
+    api.order.stopRent(orders[0]._id);
 
-    for (const order of orders) {
-      const tempBike = await api.catalog.getBike(order.bikeId);
-      if (order.end?.length !== 0) {
-        setRentedBikes((prevBikes) => [...prevBikes, tempBike]);
-      } else {
-        setPassedBikes((prevBikes) => [...prevBikes, tempBike]);
-      }
-    }
+    orders.map(async (order) => {
+      const tmp = await api.catalog.getBike(order.bikeId);
+      setRentedBikes((orders) => [...orders, tmp]);
+    });
+
+    passedOrders.map(async (passedOrder) => {
+      const tmp = await api.catalog.getBike(passedOrder.bikeId);
+      setPassedBikes((passedOrders) => [...passedOrders, tmp]);
+    });
   };
 
-  const handleQrOrder = async () => {
-    setRented(true);
+  const handleStartRent = async () => {
+    if (!orderId) {
+      return;
+    }
+
+    const currRentedBikeOrder = await api.order.getOrder(orderId);
+    const currRentedBike = await api.catalog.getBike(currRentedBikeOrder.bikeId);
+
+    setActiveOrder(currRentedBikeOrder);
+    setRentedModalVisible(true);
+    setRentedBike(currRentedBike);
+  };
+
+  const handleStopRent = async (activeOrder: Order) => {
+    if (!activeOrder) {
+      return;
+    }
+
+    const res = await api.order.stopRent(activeOrder._id);
+    setRentedModalVisible(false);
   };
 
   const handleCreateOrder = async () => {
@@ -60,6 +79,11 @@ export const Books: React.FC = () => {
     setBookingModalVisible(true);
   };
 
+  const handleLayoutClick = (bike: Bike) => {
+    setCurrBike(bike);
+    handleCreateOrder();
+  };
+
   if (rentedBikes.length === 0 && passedBikes.length === 0) {
     return (
       <section className="container">
@@ -71,37 +95,24 @@ export const Books: React.FC = () => {
 
   return (
     <section className={styles.container}>
+      {isRentedModalVisible && rentedBike && activeOrder?.start && (
+        <RentedModal
+          bike={rentedBike}
+          rentData={getOnRentTime(activeOrder?.start)}
+          onPass={() => handleStopRent(activeOrder)}
+          onClose={() => setRentedModalVisible(false)}
+        />
+      )}
+
       {isBookingModalVisible && currBike && (
         <BookingModal bike={currBike} qrCode={qrCode} onClose={() => setBookingModalVisible(false)} />
       )}
 
       <h2>Мои бронирования</h2>
-      <div className={styles.catalog}>
-        {rentedBikes.map((bike) => (
-          <BikeCard
-            onLayoutClick={() => {
-              setCurrBike(bike);
-              handleCreateOrder();
-            }}
-            bike={bike}
-            key={bike._id}
-          />
-        ))}
-      </div>
+      <CatalogSection data={rentedBikes} onLayoutClick={handleLayoutClick} />
 
       <h3>История бронирований</h3>
-      <div className={styles.catalog}>
-        {passedBikes.map((bike) => (
-          <BikeCard
-            onLayoutClick={() => {
-              setCurrBike(bike);
-              handleCreateOrder();
-            }}
-            bike={bike}
-            key={bike._id}
-          />
-        ))}
-      </div>
+      <CatalogSection data={passedBikes} onLayoutClick={handleLayoutClick} />
     </section>
   );
 };

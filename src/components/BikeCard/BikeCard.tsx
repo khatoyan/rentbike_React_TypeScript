@@ -1,11 +1,11 @@
-import React, { useRef } from 'react';
+import React from 'react';
+import clsx from 'clsx';
 
 import styles from './BikeCard.module.css';
 
-import { api } from 'src/api';
+import { getImagePathById } from '../../helpers/getValueFromQuery';
 import { Button } from '../Button';
 import { Bike } from '../../api/Api.types';
-import clsx from 'clsx';
 
 interface CardProps {
   bike: Bike;
@@ -14,25 +14,10 @@ interface CardProps {
 }
 
 export const BikeCard: React.FC<CardProps> = ({ bike, onRent, onLayoutClick }) => {
-  if (!onRent) {
-    return (
-      <div className={styles.bikeCard} onClick={onLayoutClick}>
-        <a className={styles.imgLink}>
-          <img src={`/api/catalog/bike/${bike._id}/img`} alt="bikeImage" />
-        </a>
-
-        <div>
-          <div className={styles.bikeTitle}>{bike.name}</div>
-          <div>{bike.cost} р/час</div>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className={clsx(styles.bikeCard, styles.bigCard)}>
+    <div className={clsx(styles.bikeCard, onRent && styles.bigCard)} onClick={onLayoutClick}>
       <a className={styles.imgLink}>
-        <img src={`/api/catalog/bike/${bike._id}/img`} alt="bikeImage" />
+        <img src={getImagePathById(bike._id)} alt="bikeImage" />
       </a>
 
       <div>
@@ -40,9 +25,11 @@ export const BikeCard: React.FC<CardProps> = ({ bike, onRent, onLayoutClick }) =
         <div>{bike.cost} р/час</div>
       </div>
 
-      <div className={styles.buttonContainer}>
-        <Button onClick={onRent}>Арендовать</Button>
-      </div>
+      {onRent && (
+        <div className={styles.buttonContainer}>
+          <Button onClick={onRent}>Арендовать</Button>
+        </div>
+      )}
     </div>
   );
 };

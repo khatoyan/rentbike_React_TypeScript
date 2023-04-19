@@ -10,6 +10,7 @@ import { UserData } from '../api/Api.types';
 
 import styles from './Layout.module.css';
 import { useNavigate } from 'react-router-dom';
+import { Footer } from '../components/Footer';
 
 interface LayoutProps {
   userData: null | UserData;
@@ -41,7 +42,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, userData, onLogin, onR
     <div className={styles.app}>
       <div className={styles.header}>
         <header className={styles.content}>
-          <a href="/">
+          <a onClick={() => navigate('/')}>
             <Logo />
           </a>
           <div className={styles.headerButtons}>
@@ -55,7 +56,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, userData, onLogin, onR
             )}
             {userData?.login && (
               <>
-                <a className={styles.books} href="/books">
+                <a className={styles.books} onClick={() => navigate('/books')}>
                   Мои бронирования
                 </a>
                 <Dropdown.Wrapper
@@ -68,7 +69,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, userData, onLogin, onR
                   }
                 >
                   {/* eslint-disable-next-line no-console */}
-                  <Dropdown.Item onClick={() => console.log('redirect to settings')}>Настройки</Dropdown.Item>
+                  <Dropdown.Item onClick={() => navigate('/settings')}>Настройки</Dropdown.Item>
                 </Dropdown.Wrapper>
               </>
             )}
@@ -91,6 +92,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, userData, onLogin, onR
       </div>
 
       <div className={styles.main}>{children}</div>
+      <Footer />
     </div>
   );
 };

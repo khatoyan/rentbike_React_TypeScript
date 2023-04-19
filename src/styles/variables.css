@@ -7,6 +7,7 @@
   --colorTextWarning: #d97e00;
   --colorTextError: #cb3d35;
   --colorBgLight: #f6f6f6;
+  --colorBgWhite: #fff;
   --headerHeight: calc(var(--m) * 15);
   --footerHeight: 68px;
   --catalogHeaderHeight: 40px;

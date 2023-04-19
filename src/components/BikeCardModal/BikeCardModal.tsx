@@ -3,6 +3,7 @@ import Map from '../../img/map.png';
 
 import styles from './BikeCardModal.module.css';
 
+import { getImagePathById } from '../../helpers/getValueFromQuery';
 import { Modal } from '../Modal';
 import { Bike } from 'src/api/Api.types';
 import { Button } from '../Button';
@@ -17,12 +18,10 @@ export const BikeCardModal: React.FC<BikeCardModalProps> = ({ bike, onClose, onR
   return (
     <Modal width={800} onClose={onClose} title={bike.name}>
       <div className={styles.infoWrapper}>
-        <img className={styles.bikeModalImg} src={`/api/catalog/bike/${bike._id}/img`} alt="bigBike" />
+        <img className={styles.bikeModalImg} src={getImagePathById(bike._id)} alt="bigBike" />
         <div className={styles.info}>
           <p className={styles.codeWrapper}>{bike.cost} р/час</p>
-          <a href="#mapModal">
-            <Button onClick={onRent}>Арендовать</Button>
-          </a>
+          <Button onClick={onRent}>Арендовать</Button>
         </div>
       </div>
       <div className={styles.mapWrapper}>

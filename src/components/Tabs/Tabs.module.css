@@ -61,5 +61,5 @@
 }
 
 .catalogRadio:checked + label {
-  background: #f6f6f6;
+  background: var(--colorBgLight);
 }

@@ -27,7 +27,7 @@
 }
 
 .content {
-  background-color: #fff;
+  background-color: var(--colorBgWhite);
   padding: calc(var(--m) * 5) calc(var(--m) * 6);
   max-height: 100%;
   overflow: auto;

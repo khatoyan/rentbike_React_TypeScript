@@ -9,6 +9,7 @@ import Bars from '../../img/bars.svg';
 import Dots from '../../img/dots.svg';
 
 import styles from './Tabs.module.css';
+import { useSearchParams } from 'react-router-dom';
 
 interface Props {
   points: RentPoint[];
@@ -16,11 +17,11 @@ interface Props {
 }
 
 export const Tabs = ({ points, bikesCount = 0 }: Props) => {
-  const [currentPointId, setCurrentPointId] = useState('');
+  const [currentPointId, setCurrentPointId] = useSearchParams();
   const [isMapModalVisible, setMapModalVisible] = useState(false);
 
   const onPointChange = (pointId = '') => {
-    setCurrentPointId(pointId);
+    setCurrentPointId({ pointId: pointId });
   };
 
   return (
@@ -31,14 +32,14 @@ export const Tabs = ({ points, bikesCount = 0 }: Props) => {
         {points.map((point) => (
           <a
             key={point._id}
-            className={clsx(styles.tabsLink, currentPointId === point._id ? styles.isActive : '')}
+            className={clsx(styles.tabsLink, currentPointId.get('pointId') === point._id ? styles.isActive : '')}
             onClick={() => onPointChange(point._id)}
           >
             {point.address}
           </a>
         ))}
         <a
-          className={clsx(styles.tabsLink, currentPointId === '' ? styles.isActive : '')}
+          className={clsx(styles.tabsLink, !currentPointId.get('pointId') ? styles.isActive : '')}
           onClick={() => onPointChange()}
         >
           Все пункты
@@ -51,7 +52,7 @@ export const Tabs = ({ points, bikesCount = 0 }: Props) => {
         </Button>
 
         <div className="nav-panel__label">
-          <input className={styles.catalogRadio} id="inp1" type="radio" checked name="dots" />
+          <input className={styles.catalogRadio} id="inp1" type="radio" defaultChecked name="dots" />
           <label htmlFor="inp1">
             <Bars />
           </label>

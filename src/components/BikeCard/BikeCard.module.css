@@ -2,7 +2,7 @@
   width: 281px;
   padding: 24px;
   border-radius: 16px;
-  background-color: #fff;
+  background-color: var(--colorBgWhite);
 }
 
 .bikeCard:hover {

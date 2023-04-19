@@ -15,3 +15,7 @@ export function getUpdatedQuery(query: string, params: Record<string, string | n
 
   return stringify({ ...curQuery, ...params }, { addQueryPrefix: true });
 }
+
+export function getImagePathById(bikeId: string) {
+  return `/api/catalog/bike/${bikeId}/img`;
+}
