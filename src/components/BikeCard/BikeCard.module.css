@@ -26,6 +26,7 @@
 .img {
   width: 233px;
   height: 156px;
+  border-radius: 16px;
 }
 
 .bikeTitle {
