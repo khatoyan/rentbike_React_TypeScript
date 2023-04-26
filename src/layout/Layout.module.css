@@ -1,20 +1,26 @@
 .app {
   --pad: calc(var(--m) * 12);
 
+  transition: all 0.4s;
   min-height: 100vh;
   min-width: 1280px;
   display: grid;
   grid-template-rows: auto 1fr auto;
-  background-color: #fff;
+  background-color: var(--colorBgWhite);
 }
 
 .header {
+  transition: all 0.4s;
   position: sticky;
   top: 0;
   padding: calc(var(--m) * 4) var(--pad) calc(var(--m) * 3);
-  background-color: #fff;
-  box-shadow: 0 0 calc(var(--m) * 2) rgb(0 0 0 / 10%);
+  background-color: var(--colorBgWhite);
+  box-shadow: 0 0 calc(var(--m) * 2) var(--colorShadow);
   z-index: 10;
+}
+
+path:last-child {
+  fill: var(--colorMain);
 }
 
 .content {
@@ -41,9 +47,18 @@
 .books {
   color: var(--colorMain);
   margin-right: calc(var(--m) * 6);
+  cursor: pointer;
 }
 
 .login {
   display: flex;
   align-items: center;
+}
+
+.login svg path {
+  fill: var(--colorMain);
+}
+
+.login svg circle {
+  stroke: var(--colorMain);
 }

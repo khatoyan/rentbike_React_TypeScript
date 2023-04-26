@@ -51,12 +51,11 @@ export const Catalog: React.FC = () => {
     setBikeModalVisible(true);
   };
 
-  const handleCreateOrder = async () => {
-    if (!currBike) {
+  const handleCreateOrder = async (bike: Bike) => {
+    if (bike.isBooked) {
       return;
     }
-
-    const orderBike = await api.order.createOrder(currBike._id);
+    const orderBike = await api.order.createOrder(bike._id);
     const getQrCode = await api.order.getQRCode(orderBike._id);
 
     setQrCode(getQrCode.code);
@@ -70,7 +69,7 @@ export const Catalog: React.FC = () => {
         <BikeCardModal
           bike={currBike}
           onRent={() => {
-            handleCreateOrder();
+            handleCreateOrder(currBike);
           }}
           onClose={() => setBikeModalVisible(false)}
         />

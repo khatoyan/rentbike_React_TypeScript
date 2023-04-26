@@ -21,12 +21,12 @@
 .link:hover,
 .link:focus {
   text-decoration: none;
-  background-color: rgb(0 0 0 / 5%);
+  background-color: var(--colorRadio);
 }
 
 .link.active {
   cursor: default;
-  background-color: rgb(0 0 0 / 10%);
+  background-color: var(--colorRadio);
 }
 
 .next {

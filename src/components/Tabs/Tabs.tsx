@@ -51,7 +51,7 @@ export const Tabs = ({ points, bikesCount = 0 }: Props) => {
           &nbsp;На карте
         </Button>
 
-        <div className="nav-panel__label">
+        <div className={styles.navPanelLabel}>
           <input className={styles.catalogRadio} id="inp1" type="radio" defaultChecked name="dots" />
           <label htmlFor="inp1">
             <Bars />

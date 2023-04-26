@@ -1,31 +1,47 @@
 import React from 'react';
-import Map from '../../img/map.png';
 
 import styles from './BikeCardModal.module.css';
 
-import { Modal } from '../Modal';
+import { BikeModalContainer } from './BikeModalContainer';
 import { Bike } from 'src/api/Api.types';
-import { getImagePathById } from '../../helpers/getValueFromQuery';
+
+const Month = [
+  'Января',
+  'Ферваля',
+  'Марта',
+  'Апреля',
+  'Мая',
+  'Июня',
+  'Июля',
+  'Августа',
+  'Сентября',
+  'Октября',
+  'Ноября',
+  'Декабря',
+];
 
 interface PassedModalProps {
   bike: Bike;
+  startDate: string;
+  endDate: string;
+  finalCost: number;
   onClose: () => void;
 }
 
-export const PassedModal: React.FC<PassedModalProps> = ({ bike, onClose }) => {
+export const PassedModal: React.FC<PassedModalProps> = ({ bike, startDate, endDate, finalCost, onClose }) => {
+  const dayNumber = startDate.slice(8, 10);
+  const monthNumber = Number(startDate.slice(5, 7));
+  const d = startDate.slice(11, 16);
+  const d2 = endDate.slice(11, 16);
+
   return (
-    <Modal width={800} onClose={onClose} title={bike.name}>
-      <div className={styles.infoWrapper}>
-        <img className={styles.bikeModalImg} src={getImagePathById(bike._id)} alt="bigBike" />
-        <div className={styles.info}>
-          <p>21 июня 15:23–16:48</p>
-          <h1 className={styles.finalCost}>640 ₽</h1>
-        </div>
+    <BikeModalContainer bike={bike} onClose={onClose}>
+      <div className={styles.info}>
+        <p>
+          {dayNumber} {Month[monthNumber]} {d} - {d2}
+        </p>
+        <h1 className={styles.finalCost}>{finalCost} ₽</h1>
       </div>
-      <div className={styles.mapWrapper}>
-        <h3 className={styles.mapWrapperTitle}>Пункты проката</h3>
-        <img src={Map} alt="map" />
-      </div>
-    </Modal>
+    </BikeModalContainer>
   );
 };

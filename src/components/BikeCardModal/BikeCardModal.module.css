@@ -1,4 +1,3 @@
-.bikeModal,
 .bikeReserve,
 .bikeRented {
   margin: 40px 0;
@@ -12,37 +11,14 @@
   border-radius: 16px;
 }
 
-.infoWrapper,
-.bikeReserveRent,
-.bikeRentedInfoWrapper {
+.infoWrapper {
   display: flex;
   align-items: flex-start;
   gap: 32px;
   padding-top: 24px;
 }
 
-/*
-.bikeReserveRent img,
-.bikeRentedInfoWrapper img {
-  width: 448px;
-  height: 299px;
-}
-*/
-
-.bikeRentedInfoWrapper span {
-  margin-left: 17px;
-}
-
-.bikeRentedTime {
-  font-weight: 700;
-  font-size: 32px;
-  line-height: 40px;
-}
-
-.titleWrapper,
-.mapWrapperTitle,
-.bikeReserveTitleWrapper,
-.bikeRentedTitleWrapper {
+.mapWrapperTitle {
   margin-bottom: 16px;
 }
 

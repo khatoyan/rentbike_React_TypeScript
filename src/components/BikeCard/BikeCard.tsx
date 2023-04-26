@@ -17,7 +17,7 @@ export const BikeCard: React.FC<CardProps> = ({ bike, onRent, onLayoutClick }) =
   return (
     <div className={clsx(styles.bikeCard, onRent && styles.bigCard)} onClick={onLayoutClick}>
       <a className={styles.imgLink}>
-        <img src={getImagePathById(bike._id)} alt="bikeImage" />
+        <img className={styles.img} src={getImagePathById(bike._id)} alt="bikeImage" />
       </a>
 
       <div>

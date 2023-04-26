@@ -1,11 +1,10 @@
-import React from 'react';
-import Map from '../../img/map.png';
+import React, { useEffect, useState } from 'react';
+import { api } from '../../api';
 
 import styles from './BikeCardModal.module.css';
 
-import { Modal } from '../Modal';
+import { BikeModalContainer } from './BikeModalContainer';
 import { Bike } from 'src/api/Api.types';
-import { getImagePathById } from '../../helpers/getValueFromQuery';
 
 interface BookingModalProps {
   bike: Bike;
@@ -15,20 +14,13 @@ interface BookingModalProps {
 
 export const BookingModal: React.FC<BookingModalProps> = ({ bike, qrCode, onClose }) => {
   return (
-    <Modal width={800} onClose={onClose} title={bike.name}>
-      <div className={styles.infoWrapper}>
-        <img className={styles.bikeModalImg} src={getImagePathById(bike._id)} alt="bigBike" />
-        <div className={styles.info}>
-          <p className={styles.codeWrapper}>
-            Код получения <span className={styles.keyCode}>12367</span>
-          </p>
-          <img src={qrCode} alt="QR" />
-        </div>
+    <BikeModalContainer bike={bike} onClose={onClose}>
+      <div className={styles.info}>
+        <p className={styles.codeWrapper}>
+          Код получения <span className={styles.keyCode}>12367</span>
+        </p>
+        <img src={qrCode} alt="QR" />
       </div>
-      <div className={styles.mapWrapper}>
-        <h3 className={styles.mapWrapperTitle}>Пункты проката</h3>
-        <img src={Map} alt="map" />
-      </div>
-    </Modal>
+    </BikeModalContainer>
   );
 };

@@ -1,24 +1,31 @@
 .bikeCard {
+  cursor: pointer;
   width: 281px;
   padding: 24px;
   border-radius: 16px;
-  background-color: var(--colorBgWhite);
+  background-color: var(--colorBgCard);
 }
 
 .bikeCard:hover {
   position: relative;
-  box-shadow: 2px 2px calc(var(--m) * 1) rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 2px var(--m) var(--colorShadow);
+  cursor: pointer;
 }
 
 .bigCard:hover {
   position: relative;
-  box-shadow: 2px 2px calc(var(--m) * 1) rgba(0, 0, 0, 0.1);
+  cursor: pointer;
   margin-bottom: calc(var(--footerHeight) * -1);
 }
 
 .imgLink {
   margin-bottom: 9px;
   display: block;
+}
+
+.img {
+  width: 233px;
+  height: 156px;
 }
 
 .bikeTitle {
@@ -35,5 +42,6 @@
 }
 
 .bikeCard:hover .buttonContainer {
+  transition: all 0.2s ease;
   display: block;
 }
