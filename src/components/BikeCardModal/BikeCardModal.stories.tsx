@@ -14,7 +14,7 @@ const Template: ComponentStory<typeof BikeCardModal> = (args) => <BikeCardModal 
 export const BikeModalDefault = Template.bind({});
 BikeModalDefault.args = {
   onClose: () => {
-    /*console.log('Hello')*/
+    return null;
   },
   bike: { _id: '', name: 'Stels XT280 V010', cost: 320, img: bikeDefaultImg },
 };
