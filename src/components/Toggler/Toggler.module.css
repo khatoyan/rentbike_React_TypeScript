@@ -13,23 +13,7 @@
   border: 1px solid #fff;
 }
 
-.toggler::after {
-  content: '';
-  position: absolute;
-  top: 1px;
-  left: 1px;
-  background: transparent;
-  width: 24px;
-  border-radius: 50%;
-  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
-}
-
 .toggler:checked {
   border: 1px solid #366af3;
   box-shadow: inset -20px 0 0 0 #366af3;
-}
-
-.toggler:checked::before {
-  left: 20px;
-  box-shadow: -2px 4px 3px rgba(0, 0, 0, 0.2);
 }
