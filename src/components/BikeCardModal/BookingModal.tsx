@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { api } from '../../api';
+import React from 'react';
 
 import styles from './BikeCardModal.module.css';
 

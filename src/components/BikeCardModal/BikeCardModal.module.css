@@ -1,16 +1,3 @@
-.bikeReserve,
-.bikeRented {
-  margin: 40px 0;
-  overflow-y: auto;
-  width: 800px;
-  position: relative;
-  z-index: 8;
-  padding: 40px 48px 48px;
-  background-color: var(--colorBgWhite);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  border-radius: 16px;
-}
-
 .infoWrapper {
   display: flex;
   align-items: flex-start;
