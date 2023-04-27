@@ -19,7 +19,7 @@ export interface Bike {
   name: string;
   img: string;
   cost: number;
-  isRented?: boolean;
+  isBooked?: boolean;
 }
 
 export interface Pagination<T> {

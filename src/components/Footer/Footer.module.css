@@ -1,0 +1,23 @@
+.footer {
+  transition: all 0.4s;
+  flex-shrink: 0;
+  background-color: var(--colorBgWhite);
+  color: var(--colorTextSecondary);
+  height: 67px;
+  width: 100%;
+}
+
+.footerContent {
+  padding: 0 96px;
+  max-width: 1900px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--colorBorder);
+}
+
+.footerLink {
+  color: var(--colorTextSecondary);
+}

@@ -1,11 +1,13 @@
 .container {
+  min-height: calc(100vh - 170px);
+  display: flex;
+  flex-direction: column;
   margin: 0 auto;
   max-width: 1900px;
 }
 
 .catalog {
-  margin: 40px 0;
+  padding: 40px 0;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 290px));
-  grid-gap: calc(var(--m) * 3);
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 
 import { Layout } from './layout';
 import { Router } from './Router';
@@ -39,8 +40,10 @@ export const App = () => {
   }
 
   return (
-    <Layout userData={userData} onRegister={onRegister} onLogin={onLogin}>
-      <Router />
-    </Layout>
+    <BrowserRouter>
+      <Layout userData={userData} onRegister={onRegister} onLogin={onLogin}>
+        <Router />
+      </Layout>
+    </BrowserRouter>
   );
 };

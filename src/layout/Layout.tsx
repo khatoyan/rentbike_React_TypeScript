@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useTheme } from '../hooks/useTheme';
 import Logo from './img/logo.svg';
 
 import { RegistrationFormData, RegistrationModal } from '../components/RegistrationModal/RegistrationModal';
 import { LoginFormData, LoginModal } from '../components/LoginModal/LoginModal';
 import { Button } from '../components/Button';
 import { Dropdown } from '../components/Dropdown';
+import { Toggler } from '../components/Toggler';
 import PeopleIcon from '../img/people.svg';
 import { UserData } from '../api/Api.types';
 
 import styles from './Layout.module.css';
+import { useNavigate } from 'react-router-dom';
+import { Footer } from '../components/Footer';
 
 interface LayoutProps {
   userData: null | UserData;
@@ -19,6 +23,24 @@ interface LayoutProps {
 export const Layout: React.FC<LayoutProps> = ({ children, userData, onLogin, onRegister }) => {
   const [displayLogin, setDisplayLogin] = useState(false);
   const [displayRegistration, setDisplayRegistration] = useState(false);
+  const { theme, setTheme } = useTheme();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!userData?.login) {
+      navigate('/');
+    }
+  }, [userData?.login]);
+
+  const handleTheme = () => {
+    if (theme === 'dark') {
+      setTheme('light');
+      return;
+    }
+
+    setTheme('dark');
+  };
 
   const handleRegister = async (data: RegistrationFormData) => {
     await onRegister(data.email, data.password);
@@ -33,10 +55,11 @@ export const Layout: React.FC<LayoutProps> = ({ children, userData, onLogin, onR
     <div className={styles.app}>
       <div className={styles.header}>
         <header className={styles.content}>
-          <a href="/">
+          <a onClick={() => navigate('/')}>
             <Logo />
           </a>
           <div className={styles.headerButtons}>
+            <Toggler checked={theme === 'light'} onClick={() => handleTheme()} />
             {!userData?.login && (
               <>
                 <Button onClick={() => setDisplayLogin(true)}>Войти</Button>
@@ -47,7 +70,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, userData, onLogin, onR
             )}
             {userData?.login && (
               <>
-                <a className={styles.books} href="/books">
+                <a className={styles.books} onClick={() => navigate('/books')}>
                   Мои бронирования
                 </a>
                 <Dropdown.Wrapper
@@ -60,7 +83,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, userData, onLogin, onR
                   }
                 >
                   {/* eslint-disable-next-line no-console */}
-                  <Dropdown.Item onClick={() => console.log('redirect to settings')}>Настройки</Dropdown.Item>
+                  <Dropdown.Item onClick={() => navigate('/settings')}>Настройки</Dropdown.Item>
                 </Dropdown.Wrapper>
               </>
             )}
@@ -81,8 +104,8 @@ export const Layout: React.FC<LayoutProps> = ({ children, userData, onLogin, onR
           )}
         </header>
       </div>
-
       <div className={styles.main}>{children}</div>
+      <Footer />
     </div>
   );
 };

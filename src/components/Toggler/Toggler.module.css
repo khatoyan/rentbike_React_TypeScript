@@ -1,0 +1,19 @@
+.toggler {
+  cursor: pointer;
+  transition: all 0.4s;
+  position: relative;
+  outline: none;
+  appearance: none;
+  width: 46px;
+  height: 26px;
+  background-color: #fff;
+  border-radius: 50px;
+  margin: 0 10px;
+  box-shadow: inset 20px 0 0 0 #000;
+  border: 1px solid #fff;
+}
+
+.toggler:checked {
+  border: 1px solid #366af3;
+  box-shadow: inset -20px 0 0 0 #366af3;
+}

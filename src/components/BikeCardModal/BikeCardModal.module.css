@@ -1,0 +1,58 @@
+.infoWrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+  padding-top: 24px;
+}
+
+.mapWrapperTitle {
+  margin-bottom: 16px;
+}
+
+.mapWrapper {
+  margin: 50px 0;
+}
+
+.info {
+  height: 140px;
+  margin-left: 33px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: flex-start;
+}
+
+.buttonWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.info a {
+  text-align: center;
+}
+
+.info span {
+  display: inline;
+}
+
+.onRentTime,
+.finalCost {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 40px;
+}
+
+.codeWrapper {
+  margin-bottom: 24px;
+}
+
+.keyCode {
+  font-weight: 800;
+}
+
+.bikeModalImg {
+  width: 448px;
+  height: 299px;
+}

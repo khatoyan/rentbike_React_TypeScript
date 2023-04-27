@@ -1,0 +1,78 @@
+.catalogHeader {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tabs {
+  display: flex;
+}
+
+.tabsLink {
+  transition: all 0.2s;
+  padding: calc(var(--m) * 1) 0;
+  color: var(--colorMain);
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+}
+
+.tabsLink + .tabsLink {
+  margin-left: calc(var(--m) * 3);
+}
+
+.tabsLink:hover,
+.tabsLink:focus {
+  text-decoration: none;
+  border-color: var(--colorLink);
+}
+
+.isActive {
+  border-color: var(--colorLink);
+  cursor: default;
+}
+
+.navPanel {
+  width: 343px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.navPanel svg path {
+  fill: #fff;
+}
+
+.navPanelLabel svg path {
+  fill: var(--colorMain);
+}
+
+.buttonContainer {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  color: var(--mainColor);
+}
+
+.bikeCount {
+  color: var(--colorTextSecondary);
+}
+
+.catalogRadio {
+  display: none;
+}
+
+.catalogRadio + label {
+  display: inline-block;
+  padding: 4px;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.catalogRadio:hover + label {
+  background-color: var(--colorRadio);
+}
+
+.catalogRadio:checked + label {
+  background: var(--colorRadio);
+}
