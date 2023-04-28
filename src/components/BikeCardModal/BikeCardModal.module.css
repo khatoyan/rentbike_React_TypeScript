@@ -53,6 +53,7 @@
 }
 
 .bikeModalImg {
+  border-radius: var(--m);
   width: 448px;
   height: 299px;
 }
