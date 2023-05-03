@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from '../hooks/useTheme';
+import { useNavigate } from 'react-router-dom';
+
 import Logo from './img/logo.svg';
+import PeopleIcon from '../img/people.svg';
 
 import { RegistrationFormData, RegistrationModal } from '../components/RegistrationModal/RegistrationModal';
 import { LoginFormData, LoginModal } from '../components/LoginModal/LoginModal';
 import { Button } from '../components/Button';
 import { Dropdown } from '../components/Dropdown';
 import { Toggler } from '../components/Toggler';
-import PeopleIcon from '../img/people.svg';
+import { Footer } from '../components/Footer';
 import { UserData } from '../api/Api.types';
 
 import styles from './Layout.module.css';
-import { useNavigate } from 'react-router-dom';
-import { Footer } from '../components/Footer';
 
 interface LayoutProps {
   userData: null | UserData;
