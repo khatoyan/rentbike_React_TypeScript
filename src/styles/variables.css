@@ -12,20 +12,20 @@ html[data-theme='dark'] {
   --colorMain: #fff;
   --colorLink: rgb(255, 255, 255);
   --colorBorder: #f6f6f6;
-  --colorRadio: rgba(255, 255, 255, 0.2);
   --colorTextSecondary: #f6f6f6;
+  --colorShadow: rgba(255, 255, 255, 0.7);
+  --colorRadio: rgba(255, 255, 255, 0.2);
   --colorBgWhite: #181818;
   --colorBgCard: #353535;
-  --colorShadow: rgba(255, 255, 255, 0.7);
 }
 
 html[data-theme='light'] {
-  --colorMain: #222;
   --colorLink: rgb(54, 106, 243);
   --colorBorder: #ebebeb;
-  --colorRadio: rgba(0, 0, 0, 0.09);
-  --colorTextSecondary: #858585;
   --colorBgWhite: #fff;
   --colorBgCard: #fff;
+  --colorTextSecondary: #858585;
+  --colorMain: #222;
+  --colorRadio: rgba(0, 0, 0, 0.09);
   --colorShadow: rgba(0, 0, 0, 0.1);
 }
